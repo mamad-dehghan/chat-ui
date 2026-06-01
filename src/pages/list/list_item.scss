@@ -1,0 +1,63 @@
+@use "../../lib/kitty/providers/theme/typography.scss" as typography;
+@use "../../lib/kitty/providers/theme/elevation.scss" as elevation;
+@use "../../lib/kitty/providers/theme/palette.scss" as palette;
+
+.list-item {
+    display: flex;
+    padding: 4px;
+    width: stretch;
+    min-height: 2.5rem;
+    align-items: stretch;
+    gap: 1rem;
+    cursor: pointer;
+    @include elevation.elevation-2();
+
+    .list-item-avatar {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        /* background-color: red; */
+        border-radius: 99rem;
+        flex: 0 0 2rem;
+        overflow: hidden;
+        align-items: stretch;
+        justify-content: stretch;
+        .avatar-content,
+        .avatar-empty {
+            /* margin: auto; */
+            grid-row: 1 / span 1;
+            grid-column: 1 / span 1;
+        }
+        .avatar-empty {
+            @include typography.titleLarge();
+            @include palette.primaryTheme();
+            /* text-align: center; */
+            /* vertical-align: middle; */
+            /* margin: auto; */
+            display: inline-flex;
+            align-items: stretch;
+            justify-content: center;
+            background-color: hsl(var(--container));
+            color: hsl(var(--on-container));
+        }
+    }
+
+    .list-item-content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-evenly;
+        gap: 1rem;
+
+        .list-item-title {
+            @include typography.titleSmall();
+        }
+        .list-item-description {
+            @include typography.bodySmall();
+            &:empty {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,240 @@
+@use "../../providers/theme/palette.scss" as palette;
+// TODO: move state layer front
+.switch {
+    @include palette.colorMode();
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 52px;
+    height: 32px;
+    border: {
+        width: 2px;
+        style: solid;
+        radius: var(--radius-full);
+    }
+
+    .hidden-checkbox {
+        margin: -2px;
+        position: absolute;
+        appearance: none;
+        border-radius: var(--radius-full);
+        width: inherit;
+        height: inherit;
+        cursor: inherit;
+        inset: 0;
+    }
+
+    .switch--thumb--wrapper {
+        //position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-inline: -6px;
+        width: 40px;
+        aspect-ratio: 1;
+        border-radius: var(--radius-full);
+        pointer-events: none;
+        transition: margin 300ms;
+
+        .switch--thumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-full);
+            margin: auto;
+            font-size: 16px;
+            width: 24px;
+            aspect-ratio: 1;
+            transition: width 100ms;
+        }
+    }
+
+    // sizing
+    &.checked {
+        .switch--thumb--wrapper {
+            /* margin-inline-start: auto !important; */
+            margin-inline-start: 14px;
+
+            .switch--thumb {
+                width: 24px;
+
+                &:not(.checked-icon) {
+                    svg {
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(.checked) {
+        .switch--thumb--wrapper {
+            margin-inline-end: 14px;
+
+            .switch--thumb {
+                &.unchecked-icon {
+                    width: 24px;
+                }
+
+                &:not(.unchecked-icon) {
+                    width: 16px;
+
+                    svg {
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(:disabled, .disabled) {
+        cursor: pointer;
+
+        .hidden-checkbox {
+            & + .switch--thumb--wrapper {
+                --state-layer-opacity: 0;
+            }
+
+            &:hover {
+                & + .switch--thumb--wrapper {
+                    --state-layer-opacity: 0.08;
+                }
+            }
+
+            &:focus {
+                & + .switch--thumb--wrapper {
+                    --state-layer-opacity: 0.12;
+                }
+            }
+
+            &:active {
+                & + .switch--thumb--wrapper {
+                    --state-layer-opacity: 0.16;
+
+                    .switch--thumb {
+                        width: 28px;
+                    }
+                }
+            }
+        }
+
+        &.checked {
+            &.element--surface {
+                background-color: hsl(var(--surface-variant));
+                border: {
+                    color: hsl(var(--outline));
+                }
+
+                .switch--thumb {
+                    background-color: hsl(var(--outline));
+                    color: hsl(var(--surface-container-highest));
+                }
+
+                .hidden-checkbox {
+                    & + .switch--thumb--wrapper {
+                        background-image: linear-gradient(
+                            0deg,
+                            hsla(var(--on-surface), var(--state-layer-opacity)),
+                            hsla(var(--on-surface), var(--state-layer-opacity))
+                        );
+                    }
+                }
+            }
+
+            &:not(.element--surface) {
+                background-color: hsl(var(--color));
+                border: {
+                    color: hsl(var(--color));
+                }
+
+                .switch--thumb {
+                    background-color: hsl(var(--on-color));
+                    color: hsl(var(--on-container));
+                }
+
+                .hidden-checkbox {
+                    & + .switch--thumb--wrapper {
+                        background-image: linear-gradient(
+                            0deg,
+                            hsla(var(--color), var(--state-layer-opacity)),
+                            hsla(var(--color), var(--state-layer-opacity))
+                        );
+                    }
+                }
+            }
+        }
+
+        &:not(.checked) {
+            &.element--surface {
+                background-color: hsl(var(--surface-variant));
+                border: {
+                    color: hsl(var(--outline));
+                }
+
+                .switch--thumb {
+                    background-color: hsl(var(--outline));
+                    color: hsl(var(--surface-container-highest));
+                }
+
+                .hidden-checkbox {
+                    & + .switch--thumb--wrapper {
+                        background-image: linear-gradient(
+                            0deg,
+                            hsla(var(--on-surface), var(--state-layer-opacity)),
+                            hsla(var(--on-surface), var(--state-layer-opacity))
+                        );
+                    }
+                }
+            }
+
+            &:not(.element--surface) {
+                background-color: hsl(var(--color));
+                border: {
+                    color: hsl(var(--color));
+                }
+
+                .switch--thumb {
+                    background-color: hsl(var(--on-color));
+                    color: hsl(var(--on-container));
+                }
+
+                .hidden-checkbox {
+                    & + .switch--thumb--wrapper {
+                        background-image: linear-gradient(
+                            0deg,
+                            hsla(var(--color), var(--state-layer-opacity)),
+                            hsla(var(--color), var(--state-layer-opacity))
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    &:is(:disabled, .disabled) {
+        &.checked {
+            background-color: hsla(var(--on-surface), 0.12);
+            border: {
+                color: transparent;
+            }
+
+            .switch--thumb {
+                background-color: hsl(var(--surface));
+                color: hsla(var(--on-surface), 0.38);
+            }
+        }
+
+        &:not(.checked) {
+            background-color: hsla(var(--surface-container-highest), 0.12);
+            border: {
+                color: hsla(var(--on-surface), 0.12);
+            }
+
+            .switch--thumb {
+                background-color: hsla(var(--on-surface), 0.38);
+                color: hsla(var(--surface-container-highest), 0.38);
+            }
+        }
+    }
+}

@@ -1,0 +1,158 @@
+@use "../../providers/theme/palette" as palette;
+@use "../../providers/theme/elevation" as elevation;
+@use "../../providers/theme/typography" as typography;
+
+.chip {
+  @include typography.labelLarge();
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 1px;
+  padding-block: 0.375rem;
+  padding-inline: 1rem;
+  border-radius: var(--radius-small);
+  height: 32px;
+  user-select: none;
+
+  svg {
+    font-size: 1.125rem;
+  }
+
+  &:is(:disabled, .disabled) {
+    &.assist-chip {
+      color: hsla(var(--on-surface), 0.38);
+
+      &.element-outline {
+        border-color: hsla(var(--on-surface), 0.12);
+        background-color: transparent;
+      }
+
+      &.element-elevated {
+        @include elevation.elevation-shadow-0();
+        background-color: hsla(var(--on-surface), 0.12);
+        border-color: transparent;
+      }
+    }
+
+    &.filter-chip {
+      &.element-outline {
+        color: hsla(var(--on-surface), 0.38);
+
+        &.enable {
+          background-color: hsla(var(--on-surface), 0.12);
+          border-color: transparent;
+        }
+
+        &:not(.enable) {
+          background-color: transparent;
+          border-color: hsla(var(--on-surface), 0.12);
+        }
+      }
+
+      &.element-elevated {
+        @include elevation.elevation-shadow-0();
+        background-color: hsla(var(--on-surface), 0.12);
+        color: hsla(var(--on-surface), 0.38);
+        border-color: transparent;
+      }
+    }
+  }
+
+  &:not(:disabled, .disabled) {
+    cursor: pointer;
+
+    &.assist-chip {
+      @include palette.state-layer(var(--on-surface));
+      background-color: hsl(var(--surface));
+      color: hsl(var(--on-surface));
+
+      svg {
+        color: hsl(var(--primary));
+      }
+
+      &.element-outline {
+        @include elevation.elevation-shadow-0();
+        border-color: hsl(var(--outline));
+      }
+
+      &.element-elevated {
+        @include elevation.elevation-shadow-1();
+        border-color: transparent;
+
+        &:hover {
+          @include elevation.elevation-shadow-2();
+        }
+
+        &:focus {
+          @include elevation.elevation-shadow-1();
+        }
+      }
+
+    }
+
+    &.filter-chip {
+      &.element-outline {
+        @include elevation.elevation-shadow-0();
+
+        &.enable {
+          border-color: transparent;
+          background-color: hsl(var(--secondary-container));
+
+        }
+
+        &:not(.enable) {
+          border-color: hsl(var(--outline));
+          background-color: hsl(var(--surface));
+
+          &:hover {
+            @include elevation.elevation-shadow-1()
+          }
+        }
+      }
+
+      &.element-elevated {
+        @include elevation.elevation-shadow-1();
+        border-color: transparent;
+
+        &.enable {
+          background-color: hsl(var(--secondary-container));
+        }
+
+        &:not(.enable) {
+
+          background-color: hsl(var(--surface));
+
+        }
+      }
+
+      &.enable {
+        color: hsl(var(--on-secondary-container));
+        @include palette.state-layer(var(--on-secondary-container));
+      }
+
+      &:not(.enable) {
+        color: hsl(var(--on-surface-variant));
+        @include palette.state-layer(var(--on-surface-variant));
+      }
+
+    }
+  }
+
+  &.with-icon {
+    gap: 0.5rem;
+
+    &.start-icon {
+      flex-direction: row;
+      padding-inline-start: 0.5rem;
+    }
+
+    &.end-icon {
+      flex-direction: row-reverse;
+      padding-inline-end: 0.5rem;
+    }
+  }
+
+}

@@ -1,0 +1,17 @@
+/* :root{
+    --tooltip-left : 0;
+    --tooltip-top : 0;
+} */
+
+.toool:hover {
+    background-color: red;
+    anchor-name: --toool;
+}
+.tooltip-wrapper {
+    display: contents;
+    /* pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+  } */
+}

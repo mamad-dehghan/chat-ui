@@ -1,0 +1,28 @@
+.divider-wrapper {
+  inline-size: 100%;
+  user-select: none;
+
+  &:not(.center, .full-width) {
+    padding-inline-start: 16px;
+    padding-inline-end: 0;
+  }
+
+  &.center {
+    padding-inline: 16px;
+  }
+
+  &.full-width {
+    padding-inline: 0;
+  }
+
+  .divider {
+    inline-size: 100%;
+    block-size: 1px;
+    background-color: hsl(var(--outline-variant));
+    margin-block: 8px;
+
+    &.vertical {
+      writing-mode: vertical-lr;
+    }
+  }
+}

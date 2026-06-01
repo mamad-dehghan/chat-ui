@@ -1,0 +1,120 @@
+.chip-button {
+  //@include addFullTheming();
+  @include labelLarge();
+  //TODO: add theme
+
+  display         : inline-flex;
+  align-items     : center;
+  justify-content : center;
+  height          : 2rem;
+  padding-top     : .375rem;
+  padding-bottom  : .375rem;
+  text-align      : center;
+  border          : none;
+  border-radius   : var(--radius-small);
+  outline         : none;
+
+  &:not(.chip-button--active) {
+    background-color : transparent;
+
+    &:disabled {
+      cursor : default;
+      color  : hsla(var(--on-surface), 0.38);
+      border : .0625rem solid hsla(var(--on-surface-variant), 0.12);
+    }
+
+    &:not(:disabled) {
+      cursor : pointer;
+      color  : hsla(var(--on-surface-variant), 1);
+      border : .0625rem solid hsla(var(--outline), 1);
+
+      & > svg {
+        color : hsla(var(--primary), 1);
+      }
+
+      &:hover {
+        background-image : linear-gradient(
+                        to right,
+                        hsla(var(--on-surface-variant), 0.08),
+                        hsla(var(--on-surface-variant), 0.08)
+        );
+      }
+
+      &:is(:focus, :focus-visible) {
+        border           : .0625rem solid hsla(var(--on-background), 1);
+        background-image : linear-gradient(
+                        to right,
+                        hsla(var(--on-surface-variant), 0.12),
+                        hsla(var(--on-surface-variant), 0.12)
+        );
+      }
+    }
+  }
+
+  &:is(.chip-button--active) {
+    &:disabled {
+      cursor           : default;
+      color            : hsla(var(--on-surface), 0.38);
+      background-color : hsla(var(--on-surface-variant), 0.12);
+    }
+
+    &:not(:disabled) {
+      cursor           : pointer;
+      color            : hsla(var(--on-secondary-container), 1);
+      border           : .0625rem solid transparent;
+      background-color : hsla(var(--primary-container), 1);
+
+      &:hover {
+        @include elevation-shadow-1();
+        background-image : linear-gradient(
+                        to right,
+                        hsla(var(--on-secondary-container), 0.08),
+                        hsla(var(--on-secondary-container), 0.08));
+      }
+
+      &:is(:focus,:focus-visible) {
+        background-image : linear-gradient(
+                        to right,
+                        hsla(var(--on-secondary-container), 0.12),
+                        hsla(var(--on-secondary-container), 0.12));
+      }
+    }
+  }
+
+  &:is(.chip-button--with-icon-at-end) {
+    gap                : .5rem;
+    padding-inline-end : .5rem;
+
+    & > svg:last-child {
+      font-size : 18px;
+    }
+  }
+
+  &:is(.chip-button--with-icon-at-start) {
+    gap                  : .5rem;
+    padding-inline-start : .5rem;
+
+    & > svg:first-child {
+      font-size : 18px;
+    }
+  }
+
+  &:is(.chip-button--with-avatar) {
+    border-radius        : var(--radius-full);
+    gap                  : .5rem;
+    padding-inline-start : .25rem;
+
+    & > svg:first-child {
+      font-size : 24px;
+    }
+  }
+
+  &:not(.chip-button--with-icon-at-end) {
+    padding-inline-end : 0.75rem;
+  }
+
+  &:not(.chip-button--with-icon-at-start):not(.chip-button--with-avatar) {
+    padding-inline-start : 0.75rem;
+  }
+
+}

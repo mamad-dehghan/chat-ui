@@ -1,0 +1,30 @@
+.checkbox {
+  //@include addFullTheming();
+  //TODO: add theme
+
+  font-size       : 1.125rem;
+  display         : inline-flex;
+  align-items     : center;
+  justify-content : center;
+  width           : 2.5rem;
+  height          : 2.5rem;
+  padding         : .75rem;
+  border          : none;
+  border-radius   : var(--radius-full);
+
+  // TODO: add disabled
+
+  &:is(.checkbox--disabled) {
+    cursor : default;
+  }
+
+  &:not(.checkbox--disabled) {
+    cursor           : pointer;
+    color            : hsla(var(--color), var(--saturation), var(--color-lightness), var(--alpha));
+    background-color : hsla(var(--color), var(--saturation), var(--color-lightness), 0);
+
+    &:hover {
+      background-color : hsla(var(--color), var(--saturation), var(--color-lightness), 0.05);
+    }
+  }
+}

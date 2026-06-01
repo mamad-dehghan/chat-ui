@@ -1,0 +1,542 @@
+@use "../../providers/theme/palette" as palette;
+@use "../../providers/theme/elevation" as elevation;
+@use "../../providers/theme/typography" as typography;
+main {
+    /* background-color: wheat; */
+}
+.input--outer-wrapper {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    @include palette.colorMode();
+    /* background-color: hsl(var(--container)); */
+    border-radius: var(--radius-medium);
+    height: auto;
+
+    &[data-has-error="true"] {
+        @include palette.errorTheme();
+    }
+
+    .input--inner-wrapper {
+        /* position: relative; */
+        display: inline-grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto;
+        /* overflow: hidden; */
+
+        &.input--fill {
+            border-radius: var(--radius-medium);
+            /* outline-offset: -1px; */
+            /* outline-color: hsl(var(--color)); */
+            outline: 1px solid hsl(var(--color));
+            background-color: hsl(var(--container));
+            height: 48px;
+            align-items: stretch;
+            justify-content: stretch;
+            /* position: relative; */
+            &:focus-within {
+                outline: 2px solid hsl(var(--color));
+                /* border: 2px solid hsl(var(--color)); */
+            }
+            .input {
+                padding: 12px 8px 4px;
+                @include typography.bodyLarge();
+                border: none;
+                background-color: transparent;
+                outline: none;
+                grid-column: 2/3;
+                grid-row: 1/2;
+                caret-color: hsl(var(--color));
+                color: hsl(var(--on-container)); // should test
+                &::placeholder {
+                    color: transparent;
+                }
+                &:focus {
+                    &::placeholder {
+                        color: hsl(var(--outline));
+                    }
+                }
+                &:not(&:focus):placeholder-shown ~ label {
+                    @include typography.labelLarge();
+                    padding: 12px;
+                }
+                /* &:is(&:placeholder-shown, &:focus) ~ label {
+                @include typography.labelLarge();
+                } */
+            }
+            label {
+                @include typography.labelSmall();
+                color: hsl(var(--color));
+                grid-column: 2/3;
+                grid-row: 1/2;
+                pointer-events: none;
+                padding: 0 8px;
+                transition: all 200ms;
+            }
+        }
+        .input-icon {
+            /* width: 24px; */
+            display: inline-flex;
+            /* display: contents; */
+            /* align-self: stretch; */
+            align-items: center;
+            font-size: 1.5em;
+            grid-row: 1/2;
+            min-width: 30px;
+            color: hsl(var(--color));
+            overflow: hidden;
+            /* margin-block: -1px; */
+            & > * {
+                border-radius: 0;
+                height: 100%;
+            }
+            &.start-icon {
+                justify-content: flex-end;
+                grid-column: 1/2;
+
+                border-start-start-radius: var(--radius-medium);
+                border-end-start-radius: var(--radius-medium);
+            }
+            &.end-icon {
+                justify-content: flex-start;
+                grid-column: 3/4;
+
+                border-start-end-radius: var(--radius-medium);
+                border-end-end-radius: var(--radius-medium);
+            }
+        }
+    }
+
+    .helper-text {
+        /* background-color: hsl(var(--color)); */
+        color: hsl(var(--on-container)); // should test
+        /* left: -1px; */
+        /* right: -1px; */
+        /* opacity: 0.5; */
+        /* grid-column: 1/4; */
+        /* grid-row: 1/2; */
+        /* top: 0px; */
+        /* padding-top: 36px; */
+        min-height: 2px;
+        /* transition: height 200ms; */
+        /* margin-top: -6px; */
+        border-radius: inherit;
+        /* position: relative; */
+        /* border: 1px solid hsl(var(--color)); */
+        box-sizing: border-box;
+        /* order: 7; */
+        /* display: inline-flex; */
+
+        /* position: absolute; */
+        /* content: attr(data-support-text); */
+        padding-inline: 16px;
+        @include typography.bodySmall();
+        @include typography.ellipsisText();
+        /* &:empty {
+            height: 4px;
+        } */
+    }
+}
+
+// TODO: add other kinds
+// TODO: fix background
+/* .input--wrapper {
+  position: relative;
+  //width : fit-content;
+  display: inline-flex;
+  //flex-direction: column;
+  margin-block-end: 20px;
+  // for overflow ??
+  // margin-inline: 6px;
+  @include palette.colorMode();
+
+  &.full-width {
+    width: -webkit-fill-available;
+  }
+
+  &[data-support-text]:after {
+    position: absolute;
+    top: 52px;
+    content: attr(data-support-text);
+    padding-inline: 16px;
+    @include typography.bodySmall();
+    @include typography.ellipsisText();
+  }
+
+  &:is(.disabled) {
+    color: hsla(var(--on-surface), 38%);
+    fill: hsla(var(--on-surface), 38%);
+  }
+
+  &[data-has-error="true"] {
+    &[data-support-text]:after {
+      color: hsl(var(--error));
+    }
+
+    .input {
+      &.input--outline {
+        outline-color: hsl(var(--error));
+        caret-color: hsl(var(--error));
+
+        &:not(:disabled) {
+          &:hover {
+            outline-color: hsl(var(--on-error-container));
+          }
+
+          &:focus-visible,
+          &:focus {
+            outline-color: hsl(var(--error));
+          }
+        }
+      }
+    }
+    .input--label {
+      color: hsl(var(--error));
+    }
+  }
+
+  &:not([data-has-error="true"]) {
+    &[data-support-text]:after {
+      color: hsl(var(--on-surface-variant));
+    }
+
+    .input {
+      &.input--outline {
+        outline-color: hsl(var(--outline));
+        caret-color: hsl(var(--color));
+
+        &:not(:disabled) {
+          &:hover {
+            outline-color: hsl(var(--on-surface));
+          }
+
+          &:focus-visible,
+          &:focus {
+            outline-color: hsl(var(--color));
+          }
+        }
+      }
+    }
+    .input--label {
+      color: hsl(var(--on-surface-variant));
+    }
+  }
+
+  .input {
+    outline-offset: -1px;
+    @include typography.bodyLarge();
+    background-color: inherit;
+    height: 48px;
+    padding: 8px 20px;
+    position: relative;
+
+    &:is(.input--with-start-icon) {
+      padding-inline-start: 2.75rem;
+    }
+
+    &:is(.input--with-end-icon) {
+      padding-inline-end: 2.75rem;
+    }
+
+    // &.full-width {
+    width: 100%;
+    // }
+
+    // &:not(.full-width) {
+    //   width: 400px;
+    // }
+
+    &:is(.input--outline) {
+      color: hsl(var(--on-surface));
+      outline: {
+        width: 1px;
+        style: solid;
+      }
+      border-width: 0;
+      border-radius: var(--radius-extra-large);
+      //caret-color   : hsl(var(--color));
+
+      &::placeholder {
+        color: hsl(var(--on-surface-variant));
+      }
+
+      &:not(:disabled) {
+        &:hover {
+          outline: {
+            width: 1px;
+            style: solid;
+          }
+        }
+
+        &:focus-visible,
+        &:focus {
+          outline: {
+            width: 2px;
+            style: solid;
+          }
+          & ~ .input--label {
+            color: hsl(var(--color));
+          }
+        }
+      }
+
+      &:disabled {
+        outline: {
+          width: 1px;
+          style: solid;
+          color: hsla(var(--on-surface), 12%);
+        }
+        color: hsla(var(--on-surface), 38%);
+      }
+
+      &:-webkit-autofill {
+        @include typography.bodyLarge();
+        // TODO: fix
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: #ffffff;
+        transition: background-color 5000s ease-in-out 0s;
+        box-shadow: inset 0 0 20px 20px #23232329;
+
+        &:is(:hover, :focus, :active) {
+          @include typography.bodyLarge();
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: #ffffff;
+          transition: background-color 5000s ease-in-out 0s;
+          box-shadow: inset 0 0 24px 24px hsla(var(--container), 0.5);
+        }
+      }
+    }
+
+    &[type="color"] {
+      &::-webkit-color-swatch-wrapper {
+        width: 1.5rem;
+        height: 1.5rem;
+        aspect-ratio: 1;
+        right: 0.75rem;
+        top: 0.75rem;
+        position: absolute;
+        border-radius: 1.5rem;
+        padding: 0;
+      }
+
+      &::-webkit-color-swatch {
+        border: 0;
+        width: 24px;
+        height: 24px;
+        flex: 0 0 24px;
+        border-radius: 1.5rem;
+      }
+    }
+  }
+
+  .input-icon {
+    position: absolute;
+    //user-select: none;
+    //pointer-events: none;
+    font-size: 24px;
+  }
+
+  .start-icon {
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
+  }
+
+  .end-icon {
+    //position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+  }
+
+  .input--label {
+    position: absolute;
+    top: 0;
+    transition        : {
+      duration: 75ms;
+      property: all;
+      timing-function: linear;
+    }
+    margin-inline-start: 1rem;
+    pointer-events: none;
+  }
+
+  .input {
+    &:is(:placeholder-shown):not(:focus) {
+      &:is(.input--with-start-icon) {
+        & ~ .input--label {
+          margin-inline-start: 3.25rem;
+        }
+      }
+      // for placeholder
+      & ~ .input--label {
+        @include typography.bodyLarge();
+        transform: translateY(calc(1.5rem - 50%));
+      }
+    }
+
+    &:not(:placeholder-shown),
+    &:focus {
+      padding-top: 0.625rem;
+
+      & ~ .input--label {
+        @include typography.bodySmall();
+
+        padding-inline: 4px;
+        transform: translateY(-50%);
+        background-color: hsla(var(--background), 1);
+        background-image: var(--paper--background-image);
+      }
+    }
+  }
+
+  &.input--elevated {
+    .input {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      border: none;
+      border-bottom: 0.0625rem solid hsla(var(--color), 60%, 45%, var(--alpha));
+      //border-bottom        : 0.0625rem solid hsla(var(--color), 60%, 45%, var(--alpha));
+      //border-radius        : var(--radius-extra-small) var(--radius-extra-small) var(--radius-none) var(--radius-none);
+      outline: none;
+      background-color: hsla(var(--color), 65%, 90%, var(--alpha));
+      padding-inline-start: 1rem;
+      padding-inline-end: 1rem;
+      caret-color: hsla(var(--color), 60%, 45%, var(--alpha));
+
+      &::placeholder {
+        user-select: none;
+        color: transparent;
+      }
+    }
+  }
+} */
+
+//.input--wrapper {
+//  //@include addFullTheming();
+//  //TODO: add theme
+//  //position : relative;
+//  display               : grid;
+//  grid-template-columns :1fr 400px 1fr;
+//
+//
+//  &:is(.input--wrapper--outline) {
+//
+//    //.input--label {
+//    //  background-color : hsl(var(--color));
+//    //}
+//
+//    .input--inside-wrapper {
+//      grid-column     : 2/3;
+//      display         : flex;
+//      flex-direction  : column;
+//      align-items     : flex-start;
+//      justify-content : flex-start;
+//      padding         : 4px;
+//      border-radius   : var(--radius-extra-large);
+//      //background-color : aquamarine;
+//
+//      .input {
+//        @include typography.bodyLarge();
+//        color            : hsl(var(--on-surface));
+//        width            : 100%;
+//        height           : 48px;
+//        border   : {
+//          width  : 1px;
+//          style  : solid;
+//          color  : hsl(var(--outline));
+//          radius : var(--radius-extra-large);
+//        };
+//        background-color : antiquewhite;
+//        padding          : 8px 20px;
+//        caret-color      : hsl(var(--color));
+//        outline          : none;
+//
+//        &::placeholder {
+//          color : hsl(var(--on-surface-variant));
+//        }
+//
+//        &:focus-visible, &:focus {
+//          //border  : {
+//          //  color : hsl(var(--color));
+//          //}
+//        }
+//
+//        &:disabled {
+//          outline : {
+//            width : 1px;
+//            style : solid;
+//            color : hsla(var(--on-surface), 12%);
+//          };
+//          color : hsla(var(--on-surface), 38%);
+//
+//        }
+//      }
+//
+//      .input--error-message {
+//        color : hsl(var(--on-surface-variant));
+//        @include typography.bodySmall();
+//      }
+//    }
+//  }
+//
+//  &:is(.input--wrapper--shadow) {
+//    height : 3.5rem;
+//    //border-radius : var(--radius-extra-small) var(--radius-extra-small) var(--radius-none) var(--radius-none);
+//
+//    .input--label {
+//      position            : absolute;
+//      transition        : {
+//        duration        : 75ms;
+//        property        : all;
+//        timing-function : linear;
+//      }
+//      letter-spacing      : .03125rem;
+//      margin-inline-start : 1rem;
+//    }
+//
+//    .input {
+//      padding-top          : .5rem;
+//      padding-bottom       : .5rem;
+//      border               : none;
+//      border-bottom        : 0.0625rem solid hsla(var(--color), 60%, 45%, var(--alpha));
+//      //border-bottom        : 0.0625rem solid hsla(var(--color), 60%, 45%, var(--alpha));
+//      //border-radius        : var(--radius-extra-small) var(--radius-extra-small) var(--radius-none) var(--radius-none);
+//      outline              : none;
+//      background-color     : hsla(var(--color), 65%, 90%, var(--alpha));
+//      padding-inline-start : 1rem;
+//      padding-inline-end   : 1rem;
+//      caret-color          : hsla(var(--color), 60%, 45%, var(--alpha));
+//
+//      &::placeholder {
+//        user-select : none;
+//        color       : transparent;
+//      }
+//
+//
+//      &:is(:placeholder-shown):not(:focus) {
+//        // for placeholder
+//        & ~ .input--label {
+//          //@include bodyLarge();
+//
+//          //font-size : 1rem;
+//          top       : 50%;
+//          transform : translateY(-50%);
+//          color     : hsla(var(--color), 60%, 10%, var(--alpha));
+//        }
+//      }
+//
+//      &:not(:placeholder-shown), &:focus {
+//        padding-top : .625rem;
+//        // for label
+//        & ~ .input--label {
+//          //@include bodySmall();
+//
+//          font-size : .75rem;
+//          top       : .5rem;
+//          color     : hsla(var(--color), 60%, 45%, var(--alpha));
+//        }
+//      }
+//    }
+//  }
+//
+//
+//}

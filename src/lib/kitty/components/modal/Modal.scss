@@ -1,0 +1,89 @@
+@use "../../providers/theme/palette" as palette;
+@use "../../providers/theme/elevation" as elevation;
+@use "../../providers/theme/typography" as typography;
+
+.modal-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: hsla(var(--natural-0), 0.1);
+    backdrop-filter: blur(0.5px);
+}
+
+.modal {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: center;
+    max-height: 80%;
+    border-radius: var(--radius-extra-large);
+    padding-block: 24px;
+    @include elevation.elevation-1();
+    @include elevation.elevation-shadow-3();
+    //background-color: ;
+    //max-width
+    min-width: 280px;
+    max-width: 560px;
+    /* animation: show-modal 100ms linear; */
+
+    &::view-transition-group(*) {
+        animation-duration: 250ms;
+    }
+
+    .modal-header {
+        padding-inline: 24px;
+        color: hsl(var(--on-surface));
+        @include typography.headlineSmall();
+        padding-block-end: 8px;
+    }
+
+    .modal-help-text {
+        padding-inline: 24px;
+        color: hsl(var(--on-surface-variant));
+        @include typography.bodyMedium();
+        padding-block: 8px;
+    }
+
+    .modal-body {
+        padding-inline: 24px 16px;
+        //TODO: fix
+        //@include typography.bodyMedium();
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-block: 8px;
+        scrollbar-gutter: stable;
+    }
+
+    .modal-actions {
+        padding-inline: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        padding-block-start: 8px;
+    }
+}
+
+/* ::view-transition-group(*) {
+    animation-duration: 300ms;
+} */
+
+/* *:active-view-transition() {
+    z-index: 1000;
+} */
+/* ::view-transition-old() {
+    z-index: 1000;
+}
+::view-transition-new() {
+    z-index: 1000;
+} */
+/* @keyframes show-modal {
+    0% {
+        scale: 0.1;
+    }
+    100% {
+        scale: unset;
+    }
+} */

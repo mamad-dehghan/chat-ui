@@ -1,0 +1,66 @@
+.input--wrapper {
+  //@include addFullTheming();
+  //TODO: add theme
+  position : relative;
+  display  : inline-flex;
+
+
+  &:is(.input--wrapper--shadow) {
+    height        : 3.5rem;
+    border-radius : var(--radius-extra-small) var(--radius-extra-small) var(--radius-none) var(--radius-none);
+
+    .input--label {
+      position            : absolute;
+      transition        : {
+        duration        : 75ms;
+        property        : all;
+        timing-function : linear;
+      }
+      letter-spacing      : .03125rem;
+      margin-inline-start : 1rem;
+    }
+
+    .input {
+      padding-top          : .5rem;
+      padding-bottom       : .5rem;
+      border               : none;
+      border-bottom        : 0.0625rem solid hsla(var(--color), 60%, 45%, var(--alpha));
+      border-radius        : var(--radius-extra-small) var(--radius-extra-small) var(--radius-none) var(--radius-none);
+      outline              : none;
+      background-color     : hsla(var(--color), 65%, 90%, var(--alpha));
+      padding-inline-start : 1rem;
+      padding-inline-end   : 1rem;
+      caret-color          : hsla(var(--color), 60%, 45%, var(--alpha));
+
+      &::placeholder {
+        user-select : none;
+        color       : transparent;
+      }
+
+
+      &:is(:placeholder-shown):not(:focus) {
+        // for placeholder
+        & ~ .input--label {
+          @include bodyLarge();
+
+          //font-size : 1rem;
+          top       : 50%;
+          transform : translateY(-50%);
+          color     : hsla(var(--color), 60%, 10%, var(--alpha));
+        }
+      }
+
+      &:not(:placeholder-shown), &:focus {
+        padding-top : .625rem;
+        // for label
+        & ~ .input--label {
+          @include bodySmall();
+
+          font-size : .75rem;
+          top       : .5rem;
+          color     : hsla(var(--color), 60%, 45%, var(--alpha));
+        }
+      }
+    }
+  }
+}

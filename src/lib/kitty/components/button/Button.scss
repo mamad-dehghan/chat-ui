@@ -1,0 +1,179 @@
+@use "../../providers/theme/palette" as palette;
+@use "../../providers/theme/elevation" as elevation;
+@use "../../providers/theme/typography" as typography;
+
+.button {
+    // @include palette.primaryTheme();
+    @include palette.colorMode();
+    @include elevation.elevation-shadow-0();
+    @include typography.labelLarge();
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    text-align: center;
+    //border: none;
+    border-radius: var(--radius-full);
+    outline: none;
+    user-select: none;
+
+    border-width: 0.0625rem;
+    border-style: solid;
+    //background-clip: border-box;
+    // @include elevation.elevation-0();
+
+    &.button--full-width {
+        width: 100%;
+        flex: 1 1 fit-content;
+    }
+
+    &:is(:disabled, .disabled) {
+        cursor: default;
+
+        &.button--fill {
+            color: hsla(var(--on-surface), 0.38);
+            //border: .0625rem solid transparent;
+            border-color: transparent;
+            background-color: hsla(var(--on-surface), 0.12);
+        }
+
+        &.button--outline {
+            color: hsla(var(--on-surface), 0.38);
+            //border: .0625rem solid hsla(var(--outline), 0.12);
+            border-color: hsla(var(--outline), 0.12);
+            background-color: hsla(var(--surface), 1);
+        }
+
+        &.button--link {
+            border-color: transparent;
+            background-color: transparent;
+            color: hsla(var(--on-surface), 0.38);
+        }
+
+        &.button--elevated {
+            color: hsla(var(--on-surface), 0.38);
+            //border: .0625rem solid hsla(var(--on-surface), 0.12);
+            border-color: hsla(var(--on-surface), 0.12);
+            background-color: hsla(var(--on-surface), 0.12);
+        }
+
+        &.button--tonal {
+            color: hsla(var(--on-surface), 0.38);
+            //border: .0625rem solid hsla(var(--on-surface), 0.12);
+            border-color: hsla(var(--on-surface), 0.12);
+            background-color: hsla(var(--on-surface), 0.12);
+        }
+    }
+
+    &:not(:disabled, .disabled) {
+        cursor: pointer;
+
+        &.button--fill {
+            @include elevation.elevation-shadow-0();
+            color: hsl(var(--on-color));
+            //border: .0625rem solid hsl(var(--color));
+            border-color: hsl(var(--color));
+            background-color: hsl(var(--color));
+
+            &:hover {
+                @include elevation.elevation-shadow-1();
+            }
+
+            &:active,
+            &:focus {
+                @include palette.state-layer(var(--on-color));
+            }
+        }
+
+        &.button--link {
+            // TODO: fix background
+            color: hsl(var(--color));
+            //border: .0625rem solid transparent;
+            border-color: transparent;
+            background-color: transparent;
+
+            @include elevation.elevation-shadow-0();
+            @include palette.state-layer(var(--color));
+        }
+
+        &.button--outline {
+            color: hsl(var(--color));
+            //border: .0625rem solid hsl(var(--outline));
+            border-color: hsl(var(--color));
+            //background-color: transparent;
+            background-color: hsl(var(--surface));
+            @include elevation.elevation-shadow-0();
+
+            @include palette.state-layer(var(--color));
+        }
+
+        &.button--elevated {
+            color: hsl(var(--color));
+            // surface container low
+            //border: .0625rem solid hsl(var(--surface));
+            border-color: hsl(var(--surface));
+            background-color: hsl(var(--surface));
+            @include elevation.elevation-shadow-1();
+            @include palette.state-layer(var(--color));
+
+            &:hover {
+                @include elevation.elevation-shadow-2();
+            }
+            border-image: linear-gradient(
+                0deg,
+                hsla(var(--color), var(--state-layer-opacity)),
+                hsla(var(--color), var(--state-layer-opacity))
+            );
+        }
+
+        &.button--tonal {
+            @include elevation.elevation-shadow-0();
+            color: hsl(var(--on-container));
+            background-color: hsl(var(--container));
+            //border: .0625rem solid hsl(var(--secondary-container));
+            border-color: hsl(var(--container));
+
+            @include palette.state-layer(var(--on-container));
+
+            &:hover {
+                @include elevation.elevation-shadow-1();
+            }
+            border-image: linear-gradient(
+                0deg,
+                hsla(var(--color), var(--state-layer-opacity)),
+                hsla(var(--color), var(--state-layer-opacity))
+            );
+        }
+    }
+
+    &.button-round {
+        aspect-ratio: 1;
+    }
+
+    &:not(.button-round) {
+        padding-block: 0.375rem;
+
+        &.button-with-icon {
+            gap: 0.5rem;
+
+            &.button-with-icon-at-end {
+                flex-direction: row-reverse;
+                padding-inline-start: 1.5rem;
+                padding-inline-end: 1rem;
+            }
+
+            &.button-with-icon-at-start {
+                padding-inline-end: 1.5rem;
+                padding-inline-start: 1rem;
+            }
+        }
+
+        &:not(.button-with-icon) {
+            padding-inline: 1.5rem;
+        }
+    }
+    & > * {
+        pointer-events: none;
+    }
+}

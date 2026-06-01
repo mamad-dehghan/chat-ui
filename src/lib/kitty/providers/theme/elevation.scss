@@ -1,0 +1,143 @@
+//TODO: maybe support color
+//TODO: set alpha
+
+@mixin elevation-shadow-0 {
+  box-shadow: 0 0 0 0 hsla(var(--natural-0), 1);
+}
+
+@mixin elevation-0 {
+  color: hsla(var(--on-background), 1);
+  //TODO: in dark theme background maybe must set to #000
+  background-color: hsla(var(--background), 1);
+  // @include elevation-shadow-0();
+}
+
+@mixin elevation-shadow-1 {
+  box-shadow: 0 1px 3px 1px hsla(var(--natural-0), 0.15),
+    0 1px 2px 0 hsla(var(--natural-0), 0.3);
+}
+  
+@mixin elevation-1 {
+  color: hsla(var(--on-background), 1);
+  --secondary-background-color: hsla(var(--primary), 0.05);
+  --paper--background-image: linear-gradient(
+    0,
+    var(--secondary-background-color),
+    var(--secondary-background-color)
+  );
+  background-color: hsla(var(--background), 1);
+  background-image: var(--paper--background-image);
+  // @include elevation-shadow-1();
+}
+
+@mixin elevation-shadow-2 {
+  box-shadow: 0 2px 6px 2px hsla(var(--natural-0), 0.15),
+    0 1px 2px 0 hsla(var(--natural-0), 0.3);
+}
+
+@mixin elevation-2 {
+  color: hsla(var(--on-background), 1);
+  --secondary-background-color: hsla(var(--primary), 0.08);
+  --paper--background-image: linear-gradient(
+    0,
+    var(--secondary-background-color),
+    var(--secondary-background-color)
+  );
+  background-color: hsla(var(--background), 1);
+  background-image: var(--paper--background-image);
+  // @include elevation-shadow-2();
+}
+
+@mixin elevation-shadow-3 {
+  box-shadow: 0 4px 8px 3px hsla(var(--natural-0), 0.15),
+    0 1px 3px 0 hsla(var(--natural-0), 0.3);
+}
+
+@mixin elevation-3 {
+  color: hsla(var(--on-background), 1);
+  --secondary-background-color: hsla(var(--primary), 0.11);
+  --paper--background-image: linear-gradient(
+    0,
+    var(--secondary-background-color),
+    var(--secondary-background-color)
+  );
+  background-color: hsla(var(--background), 1);
+  background-image: var(--paper--background-image);
+  // @include elevation-shadow-3();
+}
+
+@mixin elevation-shadow-4 {
+  box-shadow: 0 6px 10px 4px hsla(var(--natural-0), 0.15),
+    0 2px 3px 0 hsla(var(--natural-0), 0.3);
+}
+
+@mixin elevation-4 {
+  color: hsla(var(--on-background), 1);
+  --secondary-background-color: hsla(var(--primary), 0.12);
+  --paper--background-image: linear-gradient(
+    0,
+    var(--secondary-background-color),
+    var(--secondary-background-color)
+  );
+  background-color: hsla(var(--background), 1);
+  background-image: var(--paper--background-image);
+  // @include elevation-shadow-4();
+}
+
+@mixin elevation-shadow-5 {
+  box-shadow: 0 8px 12px 6px hsla(var(--natural-0), 0.15),
+    0 4px 4px 0 hsla(var(--natural-0), 0.3);
+}
+
+@mixin elevation-5 {
+  color: hsla(var(--on-background), 1);
+  --secondary-background-color: hsla(var(--primary), 0.14);
+  --paper--background-image: linear-gradient(
+    0,
+    var(--secondary-background-color),
+    var(--secondary-background-color)
+  );
+  background-color: hsla(var(--background), 1);
+  background-image: var(--paper--background-image);
+  // @include elevation-shadow-5();
+}
+
+//@mixin hover-filter {
+//  filter : grayscale(0.08);
+//}
+//
+//@mixin focus-filter {
+//  filter : grayscale(0.12);
+//}
+//
+//@mixin active-filter {
+//  filter : grayscale(0.12);
+//}
+
+//@mixin hover-filter {
+//  filter : grayscale(0.12);
+//}
+
+//@mixin apply-hover-filter {
+//  &:hover {
+//    @include hover-filter;
+//  }
+//}
+//
+//@mixin apply-focus-filter {
+//  &:focus {
+//    @include focus-filter;
+//  }
+//}
+//
+//@mixin apply-active-filter {
+//  &:active {
+//    @include active-filter;
+//  }
+//}
+
+//@mixin apply-hover-filter {
+//  &:hover {
+//    @include hover-filter;
+//  }
+//}

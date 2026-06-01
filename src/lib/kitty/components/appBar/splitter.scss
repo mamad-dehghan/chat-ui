@@ -1,0 +1,88 @@
+@use "../../providers/theme/elevation.scss" as elevation;
+
+.splitter {
+    display: flex;
+    width: stretch;
+    height: stretch;
+    padding: 2px;
+    @include elevation.elevation-1();
+    &.horizontal {
+        flex-direction: row;
+        /* display: grid; */
+        /* grid-template-columns: auto 1rem 1fr; */
+        & > .splitter-tumb {
+            width: 1rem;
+            cursor: w-resize;
+            .splitter-divider {
+                width: 2px;
+                height: 32px;
+            }
+        }
+        .splitter-panel-wrapper {
+            /* will-change: width; */
+            /* transform: flex-basis 100ms; */
+        }
+    }
+    &.vertical {
+        flex-direction: column;
+        & > .splitter-tumb {
+            height: 1rem;
+            cursor: n-resize;
+            & > .splitter-divider {
+                height: 2px;
+                width: 32px;
+            }
+        }
+        .splitter-panel-wrapper {
+            /* will-change: height; */
+            /* transform: flex-basis 100ms; */
+        }
+    }
+    &.resize {
+        &.horizontal {
+            cursor: w-resize;
+        }
+        &.vertical {
+            cursor: n-resize;
+        }
+        & > .splitter-tumb {
+            & > .splitter-divider {
+                /* width: 4px;
+                height: 36px; */
+                transform: scale(2, 1.25);
+                background-color: hsl(var(--secondary));
+            }
+        }
+    }
+    & > .splitter-tumb {
+        flex: 0 0 1rem;
+        display: flex;
+        flex-direction: inherit;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        /* background-color: inherit; */
+        & > .splitter-divider {
+            border: none;
+            pointer-events: none;
+            border-radius: var(--radius-full);
+            /* flex: 0 0 4px; */
+            /* margin: auto; */
+            background-color: hsl(var(--on-surface-variant));
+            transition: transform 100ms;
+        }
+    }
+    & > .splitter-panel-wrapper {
+        /* margin: 2px; */
+        border-radius: 16px;
+        background-color: white;
+        /* flex: 1 1 fit-content; */
+        flex-grow: 1;
+        flex-basis: calc(50% - 0.5rem);
+        overflow: hidden;
+        & > * {
+            width: stretch;
+            height: stretch;
+        }
+    }
+}

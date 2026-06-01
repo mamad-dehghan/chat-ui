@@ -1,0 +1,147 @@
+@use "../theme/palette";
+@use "../theme/typography";
+@use "../theme/elevation";
+
+.toasts-layer {
+    position: absolute;
+    //bottom: 0;
+    //inset-inline-start: 0;
+    padding-bottom: 1rem;
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column-reverse;
+    //display: grid;
+    //grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 100;
+    /* order: 10; */
+    gap: 8px;
+    pointer-events: none;
+    /* z-index: 100; */
+    //transform: translateX(-50%);
+
+    //TODO: change background
+    .toast {
+        position: relative;
+        //z-index: 300;
+        @include elevation.elevation-shadow-3();
+        @include palette.colorMode();
+        //@include elevation.elevation-3();
+        display: none;
+        //display: flex;
+        flex-direction: row;
+        width: min(480px, calc(100% - 1rem));
+        //width: 100%;
+        border-radius: var(--radius-extra-small);
+        background-color: hsl(var(--inverse-surface));
+        color: hsl(var(--inverse-on-surface));
+        //background-color: wheat;
+        padding-inline-start: 1rem;
+        padding-block-start: 0.25rem;
+        padding-block-end: 0.25rem;
+        padding-inline-end: 0.5rem;
+        pointer-events: auto;
+        gap: 0.75rem;
+
+        background-image: linear-gradient(
+            0,
+            hsla(var(--on-color), 0.22),
+            hsla(var(--on-color), 0.22)
+        );
+        --timer: 5s;
+        transform: translateY(100vh);
+        animation: hide-toast var(--timer) linear;
+
+        .toast-icon {
+            @include palette.inverseTheme();
+            @include elevation.elevation-shadow-0();
+            @include typography.labelLarge();
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.5rem;
+            width: 2.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            //border: none;
+            border-radius: var(--radius-full);
+            outline: none;
+            padding-block: 0.375rem;
+            user-select: none;
+            cursor: pointer;
+            color: hsl(var(--color));
+            border: 0.0625rem solid transparent;
+            background-color: transparent;
+            @include palette.state-layer(var(--color));
+            flex-shrink: 0;
+        }
+
+        p {
+            @include typography.bodyMedium();
+            flex-grow: 1;
+            //font-size: 1rem;
+            //font-weight: 500;
+            //line-height: 1.25rem;
+            padding-block-start: 0.75rem;
+            padding-block-end: 0.75rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            direction: revert;
+            white-space: nowrap;
+            direction: rtl;
+        }
+
+        .time-bar {
+            position: absolute;
+            inset-block-end: 0;
+            inset-inline-start: 0;
+            width: 100%;
+            height: 0.25rem;
+            background-color: hsla(var(--container), 1);
+            animation: toast-time-bar var(--timer) linear;
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+        }
+    }
+}
+
+@keyframes hide-toast {
+    0% {
+        display: flex;
+        //opacity: 1;
+        transform: translateY(100vh);
+    }
+    10% {
+        display: flex;
+        transform: translateY(0);
+    }
+    90% {
+        display: flex;
+        transform: translateY(0);
+    }
+    100% {
+        display: none;
+        //opacity: 0;
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes toast-time-bar {
+    10% {
+        //display: flex;
+        //opacity: 1;
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+    }
+    90% {
+        //display: none;
+        //opacity: 0;
+        clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+    }
+    100% {
+        //display: none;
+        //opacity: 0;
+        clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+    }
+}

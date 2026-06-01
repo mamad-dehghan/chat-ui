@@ -1,0 +1,74 @@
+.icon-button {
+  //@include addFullTheming();
+  //TODO: add theme
+
+  font-size       : 1.5rem;
+  display         : inline-flex;
+
+  align-items     : center;
+  justify-content : center;
+  width           : 2.5rem;
+  height          : 2.5rem;
+  padding         : .5rem;
+  border          : none;
+  border-radius   : var(--radius-full);
+  //line-height: 1.5rem;
+  outline         : none;
+
+  // TODO: make it mixin
+
+  &:is(.icon-button--disabled) {
+    cursor : default;
+    @include elevation-0();
+
+    &:is(.button--fill) {
+      color            : hsla(var(--on-surface), 0.38);
+      border           : .0625rem solid transparent;
+      background-color : hsla(var(--on-surface), 0.12);
+    }
+  }
+
+  &:not(.icon-button--disabled) {
+    cursor : pointer;
+    //@include apply-hover-filter();
+    //@include apply-focus-filter();
+    //@include apply-active-filter();
+    //opacity : 100%;
+
+    &:is(.icon-button--fill) {
+      color            : hsla(var(--color), 60%, 95%, var(--alpha));
+      border           : .0625rem solid hsla(var(--color), 70%, 45%, var(--alpha));
+      background-color : hsla(var(--color), 70%, 45%, var(--alpha));
+    }
+
+    &:is(.icon-button--link) {
+      color            : hsla(var(--color), 60%, 45%, var(--alpha));
+      border           : .0625rem solid transparent;
+      background-color : transparent;
+
+      &:hover {
+        box-shadow : 0 0 0 var(--shadow);
+        //background-color : hsla(var(--color), var(--saturation), var(--color-lightness), 0.05);
+        //opacity : 100%;
+      }
+    }
+
+    &:is(.icon-button--outline) {
+      color            : hsla(var(--color), 60%, 45%, var(--alpha));
+      border           : .0625rem solid currentColor;
+      background-color : transparent;
+    }
+
+    &:is(.icon-button--shadow) {
+      color            : hsla(var(--color), 60%, 10%, var(--alpha));
+      border           : .0625rem solid hsla(var(--color), 65%, 90%, var(--alpha));
+      background-color : hsla(var(--color), 65%, 90%, var(--alpha));
+      //border: .0625rem solid currentColor;
+
+      //&:is(:hover, :focus, :focus-visible, :focus:focus-visible) {
+      //  outline: .0625rem solid currentColor;
+      //}
+    }
+  }
+
+}

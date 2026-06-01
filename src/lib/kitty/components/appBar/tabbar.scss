@@ -1,0 +1,123 @@
+@use "../../providers/theme/typography.scss" as typography;
+@use "../../providers/theme/elevation.scss" as elevation;
+@use "../../providers/theme/palette.scss" as palette;
+
+// FIXME: text only tabs spacing
+.tab-page {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+
+    .tab-bar {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        @include elevation.elevation-0();
+        border-bottom: 1px solid hsl(var(--surface-variant));
+        .tab-indicator {
+            position: absolute;
+            pointer-events: none;
+            inset-inline: 0;
+            inset-block-end: 0;
+            border: none;
+            margin: none;
+            border-top-left-radius: var(--radius-full);
+            border-top-right-radius: var(--radius-full);
+            min-width: 24px;
+            background-color: hsl(var(--primary));
+            width: calc(var(--width) - 4px);
+            margin-left: calc(var(--left));
+            transform: translateX(-50%);
+            transition-property: transform, width, margin;
+            transition-duration: 200ms;
+            transition-delay: 200ms;
+        }
+
+        .tab {
+            border: none;
+            background-color: transparent;
+            flex: 1 0 fit-content;
+            cursor: pointer;
+            .tab-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                padding-inline: 8px;
+                padding-block-start: 8px;
+            }
+            &.has-icon {
+                height: 64px;
+                & + .tab-indicator {
+                    height: 3px;
+                }
+            }
+            &:not(.has-icon) {
+                height: 48px;
+                & + .tab-indicator {
+                    height: 2px;
+                }
+            }
+            &:focus-visible {
+                outline: none;
+                --state-layer-opacity: 0 !important;
+                .tab-content {
+                    border-radius: 1rem;
+                    outline-offset: -3px;
+                    outline-style: solid;
+                    outline-color: currentColor;
+                }
+            }
+            .tab-icon {
+                display: flex;
+                font-size: 24px;
+            }
+            .tab-title {
+                @include typography.titleSmall();
+            }
+            &.active {
+                color: hsl(var(--primary));
+                @include palette.state-layer(var(--primary));
+                padding-block-end: 4px;
+                .tab-content {
+                    margin-block-end: 4px;
+                    padding-block-end: 4px;
+                }
+            }
+            &:not(.active) {
+                color: hsl(var(--on-surface-variant));
+                @include palette.state-layer(var(--on-surface-variant));
+                .tab-content {
+                    padding-block-end: 8px;
+                }
+            }
+        }
+    }
+
+    .page-content-wrapper {
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        flex-grow: 1;
+        width: 100%;
+        /* height: 100%; */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
+
+        .page {
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            flex: 0 0 100%;
+            /* &:not(.active) {
+                visibility: hidden;
+            } */
+        }
+    }
+}

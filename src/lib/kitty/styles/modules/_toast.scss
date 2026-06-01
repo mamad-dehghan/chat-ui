@@ -1,0 +1,52 @@
+.toast {
+  position             : absolute;
+  bottom               : 1rem;
+  left                 : 50%;
+  display              : flex;
+  align-items          : flex-start;
+  //TODO: change background
+  justify-content      : space-between;
+  width                : calc(100% - 2rem);
+  transform            : translateX(-50%);
+  border-radius        : var(--radius-extra-small);
+  background-color     : wheat;
+  padding-inline-start : 1rem;
+  padding-block-start  : .25rem;
+  padding-block-end    : .25rem;
+
+  p {
+    font-size           : 1rem;
+    font-weight         : 500;
+    line-height         : 1.25rem;
+    padding-block-start : .75rem;
+    padding-block-end   : .75rem;
+  }
+
+  &:is(.toast--with-action) {
+    padding-inline-end : .5rem;
+
+    .button {
+      border-radius : var(--radius-extra-small);
+    }
+  }
+
+  &:not(.toast--with-action) {
+    padding-inline-end : 1rem;
+  }
+
+  &:is(.toast--with-action-on-right) {
+    flex-direction : row;
+
+    .button {
+      align-self : center;
+    }
+  }
+
+  &:is(.toast--with-action-on-bottom) {
+    flex-direction : column;
+
+    .button {
+      align-self : flex-end;
+    }
+  }
+}

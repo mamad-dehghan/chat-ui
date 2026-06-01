@@ -1,0 +1,23 @@
+@use "sass:string";
+
+@mixin animation-slide($fromX, $toX, $fromY, $toY) {
+  $keyframe-name: string.unique-id();
+  transform: translate($toX, $toY);
+  animation: $keyframe-name 200ms linear 1;
+  @keyframes #{$keyframe-name} {
+    0% {
+      transform: translate($fromX, $fromY);
+    }
+    100% {
+      transform: translate($toX, $toY);
+    }
+  }
+}
+
+@mixin animation-slide-X($from, $to) {
+  @include animation-slide($from, $to, 0, 0);
+}
+
+@mixin animation-slide-Y($from, $to) {
+  @include animation-slide(0, 0, $from, $to);
+}

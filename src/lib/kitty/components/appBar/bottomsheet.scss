@@ -1,0 +1,127 @@
+@use "../../providers/theme/typography" as typography;
+@use "../../providers/theme/palette" as palette;
+@use "../../providers/theme/elevation" as elevation;
+@use "../../providers/theme/animation" as animation;
+
+.bottom-sheet-layer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    background-color: hsla(var(--natural-0), 0.1);
+    /* backdrop-filter: blur(0.5px); */
+
+    .bottom-sheet-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        transition: transform 200ms;
+
+        /* 1 method , TODO: add swipe close */
+        overflow-y: scroll;
+        overflow-x: hidden;
+        min-height: 100vh;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-snap-type: y mandatory;
+
+        /* 2 method */
+        /* position: relative;
+        container-type: scroll-state;
+        container-name: sticky-header; */
+
+        &:not(.open) {
+            transform: translateY(100%);
+            /* .toper-padding {
+                flex: 0 0 20vh;
+            } */
+        }
+        &.opening {
+            .toper-padding {
+                flex: 0 0 10vh;
+            }
+        }
+
+        .toper-padding {
+            /* scroll-snap-align: end; */
+            scroll-snap-stop: always;
+            /* margin-top: auto; */
+            pointer-events: none;
+
+            /* 1 method */
+            flex: 0 0 20vh;
+
+            /* 2 method */
+        }
+
+        .top-padding {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            margin-top: auto;
+            pointer-events: none;
+
+            /* 1 method */
+            flex: 1 0 40vh;
+
+            /* 2 method */
+        }
+
+        .bottom-sheet {
+            @include elevation.elevation-shadow-3();
+            @include elevation.elevation-3();
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            /* 1 method */
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            overscroll-behavior-y: contain;
+            max-height: calc(95vh - 2rem);
+            flex: 0 1 auto;
+
+            /* 2 method */
+            /* position: sticky;
+            top: 4rem; */
+
+            .bottom-sheet-tumb {
+                flex: 0 0 2rem;
+                display: flex;
+                flex-direction: inherit;
+                align-items: center;
+                justify-content: center;
+                & > .bottom-sheet-divider {
+                    height: 2px;
+                    width: 32px;
+                    border: none;
+                    pointer-events: none;
+                    border-radius: var(--radius-full);
+                    background-color: hsl(var(--on-surface-variant));
+                    transition: transform 100ms;
+                }
+
+                /* 2 method */
+            }
+
+            .bottom-sheet-content {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                /* pointer-events: none; */
+            }
+        }
+    }
+}
+
+/* @container sticky-header scroll-state(
+stuck:top
+) {
+    .bottom-sheet {
+        background-color: rebeccapurple;
+    }
+} */

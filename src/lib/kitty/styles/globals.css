@@ -1,0 +1,35 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    --radius-none: 0;
+    --radius-extra-small: 0.25rem;
+    --radius-small: 0.5rem;
+    --radius-medium: 0.75rem;
+    --radius-large: 1rem;
+    --radius-extra-large: 28px;
+    --radius-full: 999rem;
+}
+
+html,
+body,
+#root {
+    height: 100dvh;
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*-webkit-tap-highlight-color: transparent;*/
+}
+
+/*.container {height: 100vh; width: 100%;}*/
+*:focus-visible {
+    outline: 0.125rem solid hsl(var(--on-background));
+    /*outline-style: solid;*/
+    outline-offset: 3px;
+    /*outline-width: 1px;*/
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "erasableSyntaxOnly": false,
+    "baseUrl": ".",
+    "paths": {
+      "@kitty/*": ["src/lib/kitty/*"],
+    },
+  },
+
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+  ],
+}
