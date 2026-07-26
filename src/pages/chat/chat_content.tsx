@@ -1,5 +1,5 @@
 import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
 import { IconButton, Tooltip } from "../../lib/kitty/components";
@@ -8,49 +8,23 @@ import {
   fillOptions,
   sizeOptions,
 } from "../../lib/kitty/providers/theme/types";
-import { userContext } from "../../providers/user";
-import socket from "../../utils/socket";
-import { getChatMessages } from "./api";
 import { ChatInput } from "./chat_input";
 import { ChatViewer } from "./chat_viewer";
-import { Chat, Message } from "./types";
+import { SingleChatStore } from "./types";
 
 type props = {
-  chat: Chat;
+  useChat: SingleChatStore;
 };
 
-export const ChatContent = ({ chat }: props) => {
+export const ChatContent = ({ useChat }: props) => {
   const [, setLocation] = useLocation();
-  const { userInformation } = useContext(userContext);
-  const [messages, setMessages] = useState<Map<number, Message>>(new Map());
-  // console.log(chat);
+  const loadMessages = useChat((state) => state.loadMessages);
+  const sendMessage = useChat((state) => state.sendMessage);
+  const messages = useChat((state) => state.messages);
+  const displayName = useChat((state) => state.displayName);
+
   useEffect(() => {
-    getChatMessages({ id: chat.id })
-      .then((ms) => setMessages(new Map(ms.map((m) => [m.id, m]))))
-      .catch((e) => {
-        console.error(e.message);
-      });
-    socket.on("new_message", (message: Message) => {
-      if (message.chat_id === chat.id) {
-        setMessages((pre) => {
-          pre.delete(Infinity);
-          pre.set(message.id, message);
-          return new Map(pre.entries());
-        });
-      }
-    });
-    socket.on("send_message_successful", (message: Message) => {
-      if (
-        message.chat_id === chat.id &&
-        message.user_id === userInformation.id
-      ) {
-        setMessages((pre) => {
-          pre.delete(Infinity);
-          pre.set(message.id, message);
-          return new Map(pre.entries());
-        });
-      }
-    });
+    loadMessages();
   }, []);
 
   return (
@@ -70,7 +44,7 @@ export const ChatContent = ({ chat }: props) => {
             mode={colorOptions.tertiary}
           />
         </Tooltip>
-        <span>{chat.displayName}</span>
+        <span>{displayName}</span>
         <Tooltip title="Search">
           <IconButton
             // onClick={() => {
@@ -99,25 +73,11 @@ export const ChatContent = ({ chat }: props) => {
           position: "relative",
         }}
       >
-        {/*<p>{chat?.name} :</p>*/}
-        <ChatViewer messages={Array.from(messages.values())} />
+        <ChatViewer messages={messages} />
 
         <ChatInput
           onSend={(messaageContent) => {
-            socket.emit("send_message", {
-              id: chat?.id,
-              content: messaageContent,
-            });
-            setMessages((pre) => {
-              pre.set(Infinity, {
-                id: Infinity,
-                user_id: userInformation.id,
-                chat_id: Infinity,
-                message: messaageContent,
-                created_at: new Date().toJSON(),
-              });
-              return new Map(pre.entries());
-            });
+            sendMessage(messaageContent);
           }}
         />
       </section>

@@ -1,22 +1,18 @@
-import { useContext } from "react";
-import type { Message } from "./types";
-import { userContext } from "../../providers/user";
+import { useChatStore, type Message } from "./types";
 
 type props = {
   message: Message;
 };
 
 export const MessageViewer = ({ message }: props) => {
-  const { userInformation } = useContext(userContext);
+  const userId = useChatStore((state) => state.user?.id);
   return (
     <div
       className="message-wrapper"
       style={{
         width: "cover",
         padding:
-          userInformation.id === message.user_id
-            ? "4px 4px 4px 2rem"
-            : "4px 2rem 4px 4px",
+          userId === message.user_id ? "4px 4px 4px 2rem" : "4px 2rem 4px 4px",
       }}
     >
       <p

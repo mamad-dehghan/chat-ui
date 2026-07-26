@@ -2,7 +2,7 @@ import { MessageViewer } from "./message_viewer";
 import type { Message } from "./types";
 
 type props = {
-  messages: Message[];
+  messages?: Message[];
 };
 
 export const ChatViewer = ({ messages }: props) => {
@@ -17,9 +17,13 @@ export const ChatViewer = ({ messages }: props) => {
         // gridTemplateColumns: "1fr",
       }}
     >
-      {messages.map((message) => (
-        <MessageViewer key={message.id} message={message} />
-      ))}
+      {messages ? (
+        messages.map((message) => (
+          <MessageViewer key={message.id} message={message} />
+        ))
+      ) : (
+        <span>Loading messages</span>
+      )}
     </div>
   );
 };

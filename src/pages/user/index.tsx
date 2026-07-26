@@ -1,36 +1,34 @@
-import { useContext, useMemo } from "react";
+import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { useMemo } from "react";
 import {
   useLocation,
   type RouteComponentProps,
   type StringRouteParams,
 } from "wouter";
-import { ChatContext } from "../../providers/chat";
-import { ChatContent } from "../chat/chat_content";
-import { userContext } from "../../providers/user";
-import { EmptyChat } from "./empty_chat";
 import { Header } from "../../components/header";
-import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { IconButton, Tooltip } from "../../lib/kitty/components";
 import {
-  sizeOptions,
-  fillOptions,
   colorOptions,
+  fillOptions,
+  sizeOptions,
 } from "../../lib/kitty/providers/theme/types";
+import { ChatContent } from "../chat/chat_content";
+import { useChatStore } from "../chat/types";
+import { EmptyChat } from "./empty_chat";
 
 type props = RouteComponentProps<StringRouteParams<"/user/:id">>;
 
 export const UserPage = ({ params: { id } }: props) => {
   const [, setLocation] = useLocation();
-  const { userInformation } = useContext(userContext);
-  const { getChatByDetails } = useContext(ChatContext);
-  const chat = useMemo(
-    () =>
-      getChatByDetails(["direct", [+id, userInformation.id].sort()].join("-")),
-    [getChatByDetails, id],
-  );
-  // const [messages, setMessages] = useState<Map<number, Message>>(new Map());
+  const userId = useChatStore((state) => state.user?.id);
 
-  if (!chat)
+  const getChat = useChatStore((state) => state.getChatByName);
+  const chatStore = useMemo(
+    () => getChat(["direct", [id, userId].sort()].join("-")),
+    [getChat, id],
+  );
+
+  if (!chatStore)
     return (
       <>
         <Header>
@@ -67,5 +65,5 @@ export const UserPage = ({ params: { id } }: props) => {
         <EmptyChat room={["direct", id].join(":")} />
       </>
     );
-  return <ChatContent chat={chat} />;
+  return <ChatContent useChat={chatStore} />;
 };

@@ -35,4 +35,14 @@ export default defineConfig({
     }),
     react(),
   ],
+  esbuild: {
+    // Bun uses similar esbuild under the hood
+    legalComments: "none",
+  },
+  server: {
+    // Optional: Bun-specific optimizations
+    warmup: {
+      clientFiles: ["./src/main.tsx"],
+    },
+  },
 });

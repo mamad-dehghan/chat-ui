@@ -7,7 +7,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import classNames from "classnames";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
@@ -18,30 +18,14 @@ import {
   fillOptions,
   sizeOptions,
 } from "../../lib/kitty/providers/theme/types";
-import { ChatContext } from "../../providers/chat";
-import { userContext } from "../../providers/user";
+import { useChatStore } from "../chat/types";
 import "./index.scss";
 import { ListItem } from "./list-item";
 
 export const ListPage = () => {
-  const { userInformation } = useContext(userContext);
-  const { chats } = useContext(ChatContext);
-  // const [chats, setChats] = useState<Chat[]>([]);
+  const username = useChatStore((state) => state.user?.username);
+  const chats = useChatStore((state) => state.chats);
   const [, setLocation] = useLocation();
-
-  // useEffect(() => {
-  //   socket.on("receive_chat", (chats: Chat[]) => {
-  //     setChats(chats);
-  //     // console.log("initial chat list", chats);
-  //     // setMessages((prev) => [...prev, data]);
-  //   });
-  //   socket.on("join_chat", (chat: Chat) => {
-  //     setChats((pre) =>
-  //       pre.some((c) => c.id === chat.id) ? pre : [...pre, chat],
-  //     );
-  //     console.log("join_chat", chat);
-  //   });
-  // }, []);
 
   return (
     <>
@@ -61,7 +45,7 @@ export const ListPage = () => {
               mode={colorOptions.tertiary}
             />
           </Tooltip>
-          <span>Loged in as: {userInformation.username}</span>
+          <span>Loged in as: {username}</span>
           <Tooltip title="Search">
             <IconButton
               Icon={MagnifyingGlassIcon}
@@ -74,14 +58,14 @@ export const ListPage = () => {
         <div className="chat-list">
           {Array.from(chats.values()).map((chat) => (
             <ListItem
-              key={chat.id}
+              key={chat.getState().id}
               onClick={() => {
                 document.startViewTransition(() => {
-                  setLocation(`/chat/${chat.id}`);
+                  setLocation(`/chat/${chat.getState().id}`);
                 });
               }}
               avatar={undefined}
-              title={chat.displayName}
+              title={chat.getState().displayName}
             />
           ))}
         </div>
