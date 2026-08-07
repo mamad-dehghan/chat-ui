@@ -8,6 +8,7 @@ type props = Omit<HTMLAttributes<HTMLDivElement>, "onKeyDown" | "tabIndex"> & {
   blockBottomLayers?: boolean;
   /** @default false */
   closeOnEscape?: boolean;
+  /** @default false */
   preventBlock?: boolean;
   onClose?: () => void;
 };

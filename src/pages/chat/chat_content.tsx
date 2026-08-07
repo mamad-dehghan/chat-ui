@@ -1,29 +1,24 @@
+import { IconButton, Tooltip } from "@kitty/components";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
-import { IconButton, Tooltip } from "../../lib/kitty/components";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
 import { ChatInput } from "./chat_input";
 import { ChatViewer } from "./chat_viewer";
-import { SingleChatStore } from "./types";
+import { ChatStore, SingleChatStore } from "./types";
 
 type props = {
-  useChat: SingleChatStore;
+  useChat: ChatStore;
 };
 
 export const ChatContent = ({ useChat }: props) => {
   const [, setLocation] = useLocation();
   const loadMessages = useChat((state) => state.loadMessages);
   const sendMessage = useChat((state) => state.sendMessage);
-  const messages = useChat((state) => state.messages);
-  const displayName = useChat((state) => state.displayName);
+  const displayName = useChat((state) => state.displayName ?? state.name);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     loadMessages();
   }, []);
 
@@ -62,22 +57,32 @@ export const ChatContent = ({ useChat }: props) => {
       </Header>
       <section
         style={{
-          width: "100%",
+          // width: "100%",
+          // height: "stretch",
+          width: "stretch",
+          flexGrow: 1,
+          // overflowX: "hidden",
           // minHeight: "100vh",
           // height: "100vh",
-          // overflow: "hidden",
-          // display: "grid",
-          // gridTemplateAreas: "chat-content / chat-input",
-          // gridTemplateColumns: "1fr",
-          // gridTemplateRows: "1fr auto",
-          position: "relative",
+          overflow: "hidden",
+          display: "grid",
+          gridTemplateAreas: "'chat-content' 'chat-input'",
+          gridTemplateColumns: "1fr",
+          gridTemplateRows: "1fr auto",
+          // alignItems: "stretch",
+          // position: "relative",
         }}
       >
-        <ChatViewer messages={messages} />
+        <ChatViewer useChat={useChat} />
 
         <ChatInput
-          onSend={(messaageContent) => {
-            sendMessage(messaageContent);
+          onSend={({ attachment, caption, replay_to }) => {
+            sendMessage({
+              caption,
+              attachment,
+              replay_to,
+              referrer: null,
+            });
           }}
         />
       </section>

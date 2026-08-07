@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "erasableSyntaxOnly": false,
-    "baseUrl": ".",
-    "paths": {
-      "@kitty/*": ["src/lib/kitty/*"],
-    },
   },
 
   "files": [],

@@ -6,7 +6,7 @@ export interface LoginUser {
 }
 
 export const handleLogin = async (user: LoginUser) => {
-  await fetch("http://localhost:3000/login", {
+  await fetch(`${window.origin}:3000/login`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(user),
@@ -19,7 +19,7 @@ export const handleLogin = async (user: LoginUser) => {
 };
 
 export const handleSignin = async (user: LoginUser) => {
-  await fetch("http://localhost:3000/signin", {
+  await fetch(`${window.origin}:3000/signin`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(user),

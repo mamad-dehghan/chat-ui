@@ -6,14 +6,10 @@ import {
   type StringRouteParams,
 } from "wouter";
 import { Header } from "../../components/header";
-import { IconButton, Tooltip } from "../../lib/kitty/components";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
+import { IconButton, Tooltip } from "@kitty/components";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { ChatContent } from "../chat/chat_content";
-import { useChatStore } from "../chat/types";
+import { createSingleChatStore, useChatStore } from "../chat/types";
 import { EmptyChat } from "./empty_chat";
 
 type props = RouteComponentProps<StringRouteParams<"/user/:id">>;
@@ -23,47 +19,12 @@ export const UserPage = ({ params: { id } }: props) => {
   const userId = useChatStore((state) => state.user?.id);
 
   const getChat = useChatStore((state) => state.getChatByName);
+  const chats = useChatStore((state) => state.chats);
   const chatStore = useMemo(
     () => getChat(["direct", [id, userId].sort()].join("-")),
-    [getChat, id],
+    [chats, getChat, id],
   );
 
-  if (!chatStore)
-    return (
-      <>
-        <Header>
-          <Tooltip title="Back">
-            <IconButton
-              onClick={() => {
-                document.startViewTransition(() => {
-                  setLocation("/");
-                });
-              }}
-              // className="new-chat-button"
-              Icon={CaretLeftIcon}
-              size={sizeOptions.medium}
-              fill={fillOptions.link}
-              mode={colorOptions.tertiary}
-            />
-          </Tooltip>
-          <div>user id:{id}</div>
-          <Tooltip title="Search">
-            <IconButton
-              // onClick={() => {
-
-              //   setLocation("/");
-              // }}
-              // className="new-chat-button"
-              Icon={MagnifyingGlassIcon}
-              size={sizeOptions.medium}
-              fill={fillOptions.link}
-              mode={colorOptions.tertiary}
-            />
-          </Tooltip>
-        </Header>
-
-        <EmptyChat room={["direct", id].join(":")} />
-      </>
-    );
+  if (!chatStore) return <EmptyChat id={+id} />;
   return <ChatContent useChat={chatStore} />;
 };

@@ -1,11 +1,7 @@
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { Header } from "../../components/header";
-import { IconButton, Input, Tooltip } from "../../lib/kitty/components";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
+import { IconButton, Input, Tooltip } from "@kitty/components";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { useState } from "react";
 
 type props = {

@@ -2,12 +2,8 @@ import { CaretLeftIcon, UserPlusIcon } from "@phosphor-icons/react";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
 import { useFetch } from "../../hooks/useFetch";
-import { IconButton, Tooltip } from "../../lib/kitty/components";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
+import { IconButton, Tooltip } from "@kitty/components";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { ListItem } from "../list/list-item";
 import { getContacts } from "./api";
 import "./index.scss";

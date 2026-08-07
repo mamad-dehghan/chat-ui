@@ -1,0 +1,48 @@
+@use "@kitty/providers/theme/typography.scss" as typography;
+
+.message-wrapper {
+    width: stretch;
+    /* margin-top: 1px; */
+    background-color: hsla(var(--natural-0), 0.1);
+    /* padding: 0.5rem 2rem; */
+    padding: 3px 6px;
+    display: grid;
+    grid-template-areas:
+        "profile username time"
+        "profile content content";
+    grid-template-columns: 3rem 1fr 3rem;
+    grid-template-rows: 1rem auto;
+    gap: 2px 4px;
+
+    .user-profile {
+        grid-area: profile;
+        div {
+            width: 2.5rem;
+            aspect-ratio: 1;
+            background-color: hsla(var(--secondary));
+            color: hsla(var(--on-secondary));
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        margin-bottom: auto;
+    }
+    .message-username {
+        @include typography.labelLarge();
+        grid-area: username;
+        color: hsl(var(--primary));
+        /* padding: 2px ; */
+    }
+    .message-time {
+        @include typography.bodySmall();
+        text-align: end;
+        grid-area: time;
+        color: hsl(var(--surface-variant));
+    }
+    .message-content {
+        grid-area: content;
+        color: hsl(var(--on-surface));
+    }
+}

@@ -39,7 +39,7 @@ export function blurBottomLayers() {
   if (document.querySelector(HARD_LAYERS)) {
     const mainLayers = Array.from(document.querySelectorAll(MAIN_LAYERS));
     const elements = Array.from(document.querySelectorAll(BLOCKABLE_LAYERS));
-    const activeLayer = elements.pop();
+    const activeLayer = elements.pop() as HTMLElement | undefined;
 
     mainLayers.forEach((element) => {
       element.setAttribute("inert", "true");

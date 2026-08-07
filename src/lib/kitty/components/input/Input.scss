@@ -1,9 +1,7 @@
 @use "../../providers/theme/palette" as palette;
 @use "../../providers/theme/elevation" as elevation;
 @use "../../providers/theme/typography" as typography;
-main {
-    /* background-color: wheat; */
-}
+
 .input--outer-wrapper {
     display: inline-flex;
     flex-direction: column-reverse;

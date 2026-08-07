@@ -1,57 +1,80 @@
+import { IconButton, Input } from "@kitty/components";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { ArrowUpIcon } from "@phosphor-icons/react";
-import { IconButton, Input } from "../../lib/kitty/components";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
-import "./chat-input.scss";
+import "./chat_input.scss";
+import { FileButton, useInputStore } from "./file_button";
+import { DraftMessage, Message } from "./types";
 
 type props = {
-  onSend: (messageContent: string) => void;
+  onSend: (
+    // message: Pick<Message, "caption" | "attachment" | "replay_to">,
+    message: DraftMessage,
+  ) => void;
 };
 
 export const ChatInput = ({ onSend }: props) => {
+  const fileType = useInputStore((state) => state.type);
+  const viewer = useInputStore((state) => state.viewer);
+  const fileContent = useInputStore((state) => state.content);
+  const getAttachment = useInputStore((state) => state.getAsAttachment);
+  const reset = useInputStore((state) => state.reset);
+  console.log(fileType);
   return (
-    <Input
-      className="chat-input"
-      fill={fillOptions.fill}
-      style={
-        {
-          // position: "fixed",
-          // left: 0,
-          // bottom: 0,
-          // gridArea: "chat-input",
-        }
-      }
-      mode={colorOptions.primary}
-      id="chat-input"
-      label=""
-      onKeyDown={(e) => {
-        const content = e.currentTarget.value;
-        if (e.key === "Enter" && content) {
-          onSend(content);
-          e.currentTarget.value = "";
-        }
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
       }}
-      iconEnd={
-        <IconButton
-          size={sizeOptions.small}
-          // mode={colorOptions.secondary}
-          fill={fillOptions.fill}
-          Icon={ArrowUpIcon}
-          enable
-          onClick={() => {
-            const input = document.getElementById(
-              "chat-input",
-            ) as HTMLInputElement | null;
-            if (input && input.value) {
-              onSend(input.value);
-              input.value = "";
-            }
-          }}
-        />
-      }
-    />
+    >
+      {viewer(fileContent)}
+      <Input
+        className="chat-input"
+        fill={fillOptions.fill}
+        mode={colorOptions.primary}
+        id="chat-input"
+        label=""
+        onKeyDown={(e) => {
+          const content = e.currentTarget.value;
+          const attachment = getAttachment();
+          if (e.key === "Enter" && (content || attachment?.length)) {
+            onSend({
+              caption: content,
+              attachment,
+              replay_to: null,
+              referrer: null,
+            });
+            reset();
+            e.currentTarget.value = "";
+          }
+        }}
+        iconStart={<FileButton />}
+        iconEnd={
+          <IconButton
+            size={sizeOptions.small}
+            // mode={colorOptions.secondary}
+            fill={fillOptions.fill}
+            Icon={ArrowUpIcon}
+            enable
+            onClick={() => {
+              const input = document.getElementById(
+                "chat-input",
+              ) as HTMLInputElement | null;
+              const attachment = getAttachment();
+              if (input && (input.value || attachment?.length)) {
+                onSend({
+                  caption: input.value,
+                  attachment,
+                  replay_to: null,
+                  referrer: null,
+                });
+                reset();
+                input.value = "";
+              }
+            }}
+          />
+        }
+      />
+    </div>
   );
 };

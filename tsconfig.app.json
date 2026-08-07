@@ -11,6 +11,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@kitty/*": ["src/lib/kitty/*"],
+    },
 
     // Bun-specific optimizations
     "types": ["bun-types"],

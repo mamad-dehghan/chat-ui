@@ -1,5 +1,5 @@
 import { Route, Router, Switch } from "wouter";
-import { useWouter } from "./lib/kitty/hooks/useWouter";
+import { useWouter } from "@kitty/hooks/useWouter";
 import { ChatPage } from "./pages/chat";
 import { ContactsPage } from "./pages/contacts";
 import { SelectGroupUserPage } from "./pages/group/create";

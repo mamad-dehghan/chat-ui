@@ -1,6 +1,6 @@
-@use "../../lib/kitty/providers/theme/typography.scss" as typography;
-@use "../../lib/kitty/providers/theme/elevation.scss" as elevation;
-@use "../../lib/kitty/providers/theme/palette.scss" as palette;
+@use "@kitty/providers/theme/typography.scss" as typography;
+@use "@kitty/providers/theme/elevation.scss" as elevation;
+@use "@kitty/providers/theme/palette.scss" as palette;
 
 .list-item {
     display: flex;

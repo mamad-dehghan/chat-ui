@@ -11,13 +11,9 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
-import { IconButton, Tooltip } from "../../lib/kitty/components";
-import { AppLayer } from "../../lib/kitty/providers";
-import {
-  colorOptions,
-  fillOptions,
-  sizeOptions,
-} from "../../lib/kitty/providers/theme/types";
+import { IconButton, Tooltip } from "@kitty/components";
+import { AppLayer } from "@kitty/providers";
+import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { useChatStore } from "../chat/types";
 import "./index.scss";
 import { ListItem } from "./list-item";
@@ -65,7 +61,7 @@ export const ListPage = () => {
                 });
               }}
               avatar={undefined}
-              title={chat.getState().displayName}
+              title={chat.getState().displayName ?? chat.getState().name}
             />
           ))}
         </div>

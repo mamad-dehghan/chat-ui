@@ -1,7 +1,7 @@
 import { CheckIcon } from "@phosphor-icons/react";
-import { Badge } from "../../lib/kitty/components";
+import { Badge } from "@kitty/components";
 import { ComponentProps } from "react";
-import { colorOptions } from "../../lib/kitty/providers/theme/types";
+import { colorOptions } from "@kitty/providers";
 import "./check_tick.scss";
 
 export const TickBadge = (

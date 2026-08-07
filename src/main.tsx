@@ -4,7 +4,7 @@ import {
   ThemeProvider,
   ToastProvider,
   TooltipProvider,
-} from "./lib/kitty/providers/index";
+} from "@kitty/providers";
 import { AppRouter } from "./router";
 
 createRoot(document.getElementById("root")!).render(
