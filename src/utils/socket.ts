@@ -1,6 +1,9 @@
 import { io, Socket } from "socket.io-client";
 
-const socket: Socket = io(`${window.origin}:3000`, {
+// export const SERVER_HOST = "/api";
+export const SERVER_HOST = "http://localhost:3000";
+
+const socket: Socket = io(SERVER_HOST, {
   withCredentials: true,
   autoConnect: false,
 });

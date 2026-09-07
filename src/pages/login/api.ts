@@ -1,4 +1,4 @@
-import socket from "../../utils/socket";
+import socket, { SERVER_HOST } from "../../utils/socket";
 
 export interface LoginUser {
   username: string;
@@ -6,7 +6,7 @@ export interface LoginUser {
 }
 
 export const handleLogin = async (user: LoginUser) => {
-  await fetch(`${window.origin}:3000/login`, {
+  await fetch(`${SERVER_HOST}/login`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(user),
@@ -19,7 +19,7 @@ export const handleLogin = async (user: LoginUser) => {
 };
 
 export const handleSignin = async (user: LoginUser) => {
-  await fetch(`${window.origin}:3000/signin`, {
+  await fetch(`${SERVER_HOST}/signin`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(user),
