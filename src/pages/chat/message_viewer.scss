@@ -1,4 +1,4 @@
-@use "@kitty/providers/theme/typography.scss" as typography;
+@use "kitty/scss/typography" as typography;
 
 .message-wrapper {
     width: stretch;
@@ -16,6 +16,7 @@
 
     .user-profile {
         grid-area: profile;
+
         div {
             width: 2.5rem;
             aspect-ratio: 1;
@@ -27,22 +28,29 @@
             align-items: center;
             justify-content: center;
         }
+
         margin-bottom: auto;
     }
+
     .message-username {
         @include typography.labelLarge();
         grid-area: username;
         color: hsl(var(--primary));
         /* padding: 2px ; */
     }
+
     .message-time {
         @include typography.bodySmall();
         text-align: end;
         grid-area: time;
         color: hsl(var(--surface-variant));
     }
+
     .message-content {
+        @include typography.bodyMedium();
+        /* @include typography.ellipsisText(); */
         grid-area: content;
         color: hsl(var(--on-surface));
+        padding: 2px 2rem 2px 4px;
     }
 }

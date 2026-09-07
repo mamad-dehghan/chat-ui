@@ -1,6 +1,6 @@
-@use "@kitty/providers/theme/typography.scss" as typography;
-@use "@kitty/providers/theme/elevation.scss" as elevation;
-@use "@kitty/providers/theme/palette.scss" as palette;
+@use "kitty/scss/typography" as typography;
+@use "kitty/scss/elevation" as elevation;
+@use "kitty/scss/palette" as palette;
 
 .list-item {
     display: flex;
@@ -22,12 +22,14 @@
         overflow: hidden;
         align-items: stretch;
         justify-content: stretch;
+
         .avatar-content,
         .avatar-empty {
             /* margin: auto; */
             grid-row: 1 / span 1;
             grid-column: 1 / span 1;
         }
+
         .avatar-empty {
             @include typography.titleLarge();
             @include palette.primaryTheme();
@@ -53,8 +55,10 @@
         .list-item-title {
             @include typography.titleSmall();
         }
+
         .list-item-description {
             @include typography.bodySmall();
+
             &:empty {
                 display: none;
             }

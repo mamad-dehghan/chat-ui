@@ -1,16 +1,19 @@
 import { Route, Router, Switch } from "wouter";
-import { useWouter } from "@kitty/hooks/useWouter";
+// import { useWouter } from "kitty";
 import { ChatPage } from "./pages/chat";
 import { ContactsPage } from "./pages/contacts";
 import { SelectGroupUserPage } from "./pages/group/create";
 import { ListPage } from "./pages/list";
 import { UserPage } from "./pages/user";
 import { UserProvider } from "./providers/user";
+import { useHistoryLockAbility } from "kitty";
 
 export const AppRouter = () => {
+  useHistoryLockAbility()
+
   return (
     <UserProvider>
-      <Router hook={useWouter}>
+      <Router>
         <Switch>
           <Route path="/" component={ListPage} />
           <Route path="/chat/:id" component={ChatPage} />

@@ -1,5 +1,5 @@
-import { IconButton, Input } from "@kitty/components";
-import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
+import { IconButton, Input } from "kitty";
+import { colorOptions, fillOptions, sizeOptions } from "kitty";
 import { ArrowUpIcon } from "@phosphor-icons/react";
 import "./chat_input.scss";
 import { FileButton, useInputStore } from "./file_button";

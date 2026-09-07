@@ -1,35 +1,37 @@
 {
   "name": "talk-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bun run --bun vite --port 80",
+    "dev": "bun run --bun vite",
     "build": "tsc --noEmit false --skipLibCheck true && bun run --bun vite build",
     "preview": "bun run --bun vite preview"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.7",
-    "classnames": "^2.5.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-inlinesvg": "^4.4.1",
-    "sass": "^1.57.1",
+    "kitty": "workspace:*",
+    "@phosphor-icons/react": "catalog:",
+    "classnames": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-inlinesvg": "catalog:",
+    "sass": "catalog:",
     "socket.io-client": "^4.8.3",
-    "typescript-cookie": "^1.0.6",
-    "wouter": "^3.9.0",
+    "typescript-cookie": "catalog:",
+    "wouter": "catalog:",
+    "phosphor-react": "catalog:",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/parser": "^8.62.0",
-    "@vitejs/plugin-react-swc": "^3.8.0",
-    "eslint": "^10.5.0",
-    "globals": "^17.4.0",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.26.1",
-    "vite": "^8.0.0",
-    "vite-plugin-svgr": "^4.5.0"
+    "@types/bun": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-mkcert": "^2.1.0"
   }
 }

@@ -1,15 +1,11 @@
-import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import {
   useLocation,
   type RouteComponentProps,
   type StringRouteParams,
 } from "wouter";
-import { Header } from "../../components/header";
-import { IconButton, Tooltip } from "@kitty/components";
-import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { ChatContent } from "../chat/chat_content";
-import { createSingleChatStore, useChatStore } from "../chat/types";
+import { useChatStore } from "../chat/types";
 import { EmptyChat } from "./empty_chat";
 
 type props = RouteComponentProps<StringRouteParams<"/user/:id">>;

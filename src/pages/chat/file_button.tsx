@@ -9,8 +9,6 @@ import {
 } from "@phosphor-icons/react";
 import { ReactNode, useEffect } from "react";
 import { create } from "zustand";
-import { Drawer, IconButton, NavBar } from "@kitty/components";
-import { fillOptions, sizeOptions } from "@kitty/providers";
 import "./file_button.scss";
 import { DraftMessage, Message, messageAttachment } from "./types";
 

@@ -1,12 +1,11 @@
-import { IconButton, Tooltip } from "@kitty/components";
-import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
 import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { colorOptions, fillOptions, IconButton, sizeOptions, Tooltip } from "kitty";
 import { useLayoutEffect } from "react";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
 import { ChatInput } from "./chat_input";
 import { ChatViewer } from "./chat_viewer";
-import { ChatStore, SingleChatStore } from "./types";
+import { ChatStore } from "./types";
 
 type props = {
   useChat: ChatStore;

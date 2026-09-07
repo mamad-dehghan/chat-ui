@@ -1,8 +1,9 @@
-@use "@kitty/providers/theme/elevation.scss" as elevation;
+@use "kitty/scss/elevation" as elevation;
 
 :root {
     --header-size: 2.5rem;
 }
+
 .app-header {
     /* position: abs; */
     /* grid-area: app-header; */
@@ -15,8 +16,9 @@
     justify-content: space-between;
     @include elevation.elevation-3();
 
-    & > *:nth-child(1) {
+    &>*:nth-child(1) {
         view-transition-name: "header-section-1";
+
         &::view-transition-group(*) {
             animation-duration: 250ms;
         }

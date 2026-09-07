@@ -2,8 +2,8 @@ import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { useLocation } from "wouter";
 import { Header } from "../../components/header";
-import { FilterChip, IconButton, Tooltip } from "@kitty/components";
-import { colorOptions, fillOptions, sizeOptions } from "@kitty/providers";
+import { FilterChip, IconButton, Tooltip } from "kitty";
+import { colorOptions, fillOptions, sizeOptions } from "kitty";
 import { User } from "../../providers/user";
 import { ListItem } from "../list/list-item";
 

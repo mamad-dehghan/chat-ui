@@ -12,14 +12,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": ".",
-    "paths": {
-      "@kitty/*": ["src/lib/kitty/*"],
-    },
-
     // Bun-specific optimizations
-    "types": ["bun-types"],
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": [
+      "bun-types"
+    ],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
 }
