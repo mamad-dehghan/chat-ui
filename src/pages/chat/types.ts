@@ -37,6 +37,7 @@ export interface Message {
         id: string;
         name: string;
         type: string;
+        details: any;
       }[]
     | null;
   referrer: Referrence | null;

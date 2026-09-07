@@ -7,10 +7,11 @@ import {
   UserIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import { Drawer, fillOptions, IconButton, NavBar, sizeOptions } from "kitty";
 import { ReactNode, useEffect } from "react";
 import { create } from "zustand";
 import "./file_button.scss";
-import { DraftMessage, Message, messageAttachment } from "./types";
+import { DraftMessage, messageAttachment } from "./types";
 
 export const FileButton = () => {
   const toggle = useInputStore((state) => state.toggle);
@@ -39,6 +40,7 @@ export const FileButton = () => {
           }}
         >
           <NavBar
+            media="md"
             items={[
               {
                 title: "Contacts",
@@ -82,10 +84,19 @@ export const FileButton = () => {
               {
                 title: "Camera",
                 Icon: CameraIcon,
-                content: <div>Camera</div>,
+                content: (
+                  <div
+                    onClick={async () => {
+                      const dirHandle = await window.showDirectoryPicker();
+                      console.log(dirHandle);
+                    }}
+                  >
+                    Camera
+                  </div>
+                ),
               },
             ]}
-            initialActiveItem="Files"
+            initialActiveItem="Camera"
           />
         </div>
       </Drawer>
@@ -126,13 +137,13 @@ export const useInputStore = create<InputStore>((set, get) => ({
       if (newList.length === state.content.length) return {};
       return newList.length === 0
         ? {
-            content: [],
-            viewer: () => <></>,
-            type: "empty",
-          }
+          content: [],
+          viewer: () => <></>,
+          type: "empty",
+        }
         : {
-            content: newList,
-          };
+          content: newList,
+        };
     });
   },
   viewer: () => <></>,

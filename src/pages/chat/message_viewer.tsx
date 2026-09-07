@@ -34,11 +34,13 @@ export const MessageViewer = ({ message }: props) => {
       </div>
       <div
         className="message-content"
-        style={{
-          // backgroundColor: "hsla(var(--natural-0), 0.1)",
-          // borderRadius: "var(--radius-extra-small)",
-          padding: "2px 4px",
-        }}
+        style={
+          {
+            // backgroundColor: "hsla(var(--natural-0), 0.1)",
+            // borderRadius: "var(--radius-extra-small)",
+            // padding: "2px 4px",
+          }
+        }
       >
         <AttachmentViewer
           attachment={message.attachment}
