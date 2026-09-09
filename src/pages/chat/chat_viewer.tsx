@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
+import { MediaViewer, useMediaStore1 } from "../../components/media_viewer";
 import { MessageViewer } from "./message_viewer";
-import { ChatStore, EmptyDirectChatStore, type SingleChatStore } from "./types";
-import { StoreApi, UseBoundStore } from "zustand";
+import { ChatStore } from "./types";
 
 type props = {
   useChat: ChatStore;
@@ -19,6 +19,10 @@ export const ChatViewer = ({ useChat }: props) => {
       el.scrollIntoView();
     }
   }, [isLoading]);
+
+  useLayoutEffect(() => {
+    useMediaStore1.getState().setChat(useChat);
+  }, [])
 
   return (
     <div
@@ -48,6 +52,7 @@ export const ChatViewer = ({ useChat }: props) => {
         ) : (
           <span>Loading messages</span>
         )}
+        <MediaViewer />
       </div>
     </div>
   );

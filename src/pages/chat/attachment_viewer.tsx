@@ -1,5 +1,6 @@
 import { FileIcon } from "@phosphor-icons/react";
 import { ReactNode, useMemo } from "react";
+import { useMediaStore1 } from "../../components/media_viewer";
 import { SERVER_HOST } from "../../utils/socket";
 import "./attachment_viewer.scss";
 import "./file_button.scss";
@@ -93,6 +94,8 @@ type props = {
 };
 
 const ImageAttachmentViewer = ({ attachment, chat_id, message_id }: props) => {
+  const openMediaViewer = useMediaStore1(state => state.open);
+
   const url = useMemo(
     () =>
       `${SERVER_HOST}/attachment?${new URLSearchParams({
@@ -105,16 +108,18 @@ const ImageAttachmentViewer = ({ attachment, chat_id, message_id }: props) => {
 
   return (
     <div
-      // data-aspect={attachment.details.width / attachment.details.height}
       style={{
         minWidth: 0,
         minHeight: 0,
+      }}
+      onClick={() => {
+        openMediaViewer({ ...attachment, message_id, type: "image" })
       }}
     >
       <img
         src={url}
         style={{
-          aspectRatio: attachment.details.width / attachment.details.height,
+          aspectRatio: attachment.details.height / attachment.details.width,
           display: "block",
           width: "100%",
           height: "100%",
