@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useFetch } from "../../hooks/useFetch";
-import { User } from "../../providers/user";
+import { type User } from "../../providers/user";
 import socket from "../../utils/socket";
 import { getContacts } from "../contacts/api";
 import { AskInfo } from "./ask_info";

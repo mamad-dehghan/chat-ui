@@ -1,5 +1,5 @@
-import { create, StoreApi, UseBoundStore } from "zustand";
-import { User } from "../../providers/user";
+import { create, type StoreApi, type UseBoundStore } from "zustand";
+import { type User } from "../../providers/user";
 import socket from "../../utils/socket";
 import { getChatMessages } from "./api";
 

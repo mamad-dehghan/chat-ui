@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
+    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "types": ["bun-types"],
+
+    "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+
+    "composite": true,
+    "skipLibCheck": true,
+
+    "types": ["bun"]
   },
-  "include": ["vite.config.ts"],
+  "include": ["vite.config.ts"]
 }

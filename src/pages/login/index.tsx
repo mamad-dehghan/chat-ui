@@ -17,7 +17,7 @@ const USERS: LoginUser[] = [
 ];
 
 export const LoginPage = () => {
-  const [user, setUser] = useState<LoginUser>(USERS[0]);
+  const [user, setUser] = useState<LoginUser>(USERS[0]!);
 
   return (
     <>

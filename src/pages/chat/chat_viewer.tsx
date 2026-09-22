@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { MediaViewer, useMediaStore1 } from "../../components/media_viewer";
 import { MessageViewer } from "./message_viewer";
-import { ChatStore } from "./types";
+import { type ChatStore } from "./types";
 
 type props = {
   useChat: ChatStore;
@@ -22,7 +22,7 @@ export const ChatViewer = ({ useChat }: props) => {
 
   useLayoutEffect(() => {
     useMediaStore1.getState().setChat(useChat);
-  }, [])
+  }, []);
 
   return (
     <div
@@ -43,6 +43,7 @@ export const ChatViewer = ({ useChat }: props) => {
           flexDirection: "column",
           flexGrow: 1,
           justifyContent: "flex-end",
+          overflowAnchor: "auto",
         }}
       >
         {messages ? (

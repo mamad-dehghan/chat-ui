@@ -1,6 +1,6 @@
 import { CheckIcon } from "@phosphor-icons/react";
 import { Badge } from "kitty";
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 import { colorOptions } from "kitty";
 import "./check_tick.scss";
 

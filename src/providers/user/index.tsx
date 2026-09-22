@@ -11,7 +11,7 @@ export interface User {
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const userInformation = useChatStore((state) => state.user);
-  const [location, setLocation] = useLocation();
+  const [_, setLocation] = useLocation();
 
   useLayoutEffect(() => {
     socket.on("connect_error", (err) => {

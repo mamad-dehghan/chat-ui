@@ -1,9 +1,5 @@
 import { useMemo } from "react";
-import {
-  useLocation,
-  type RouteComponentProps,
-  type StringRouteParams,
-} from "wouter";
+import { type RouteComponentProps, type StringRouteParams } from "wouter";
 import { ChatContent } from "../chat/chat_content";
 import { useChatStore } from "../chat/types";
 import { EmptyChat } from "./empty_chat";
@@ -11,7 +7,6 @@ import { EmptyChat } from "./empty_chat";
 type props = RouteComponentProps<StringRouteParams<"/user/:id">>;
 
 export const UserPage = ({ params: { id } }: props) => {
-  const [, setLocation] = useLocation();
   const userId = useChatStore((state) => state.user?.id);
 
   const getChat = useChatStore((state) => state.getChatByName);

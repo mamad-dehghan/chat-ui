@@ -8,10 +8,10 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { Drawer, fillOptions, IconButton, NavBar, sizeOptions } from "kitty";
-import { ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import { create } from "zustand";
 import "./file_button.scss";
-import { DraftMessage, messageAttachment } from "./types";
+import { type DraftMessage, type messageAttachment } from "./types";
 
 export const FileButton = () => {
   const toggle = useInputStore((state) => state.toggle);
@@ -137,13 +137,13 @@ export const useInputStore = create<InputStore>((set, get) => ({
       if (newList.length === state.content.length) return {};
       return newList.length === 0
         ? {
-          content: [],
-          viewer: () => <></>,
-          type: "empty",
-        }
+            content: [],
+            viewer: () => <></>,
+            type: "empty",
+          }
         : {
-          content: newList,
-        };
+            content: newList,
+          };
     });
   },
   viewer: () => <></>,

@@ -1,9 +1,6 @@
-import { useMemo, useState } from "react";
-import socket from "../../utils/socket";
-import { ChatInput } from "../chat/chat_input";
-import { ChatViewer } from "../chat/chat_viewer";
-import { useChatStore, type Message } from "../chat/types";
+import { useMemo } from "react";
 import { ChatContent } from "../chat/chat_content";
+import { useChatStore } from "../chat/types";
 
 type props = {
   id: number;

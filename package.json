@@ -19,18 +19,12 @@
     "socket.io-client": "^4.8.3",
     "typescript-cookie": "catalog:",
     "wouter": "catalog:",
-    "phosphor-react": "catalog:",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@types/bun": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@typescript-eslint/parser": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "eslint": "catalog:",
-    "globals": "catalog:",
-    "typescript-eslint": "catalog:",
     "vite": "catalog:",
     "vite-plugin-mkcert": "^2.1.0"
   }

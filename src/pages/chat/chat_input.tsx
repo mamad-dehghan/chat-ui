@@ -3,7 +3,7 @@ import { colorOptions, fillOptions, sizeOptions } from "kitty";
 import { ArrowUpIcon } from "@phosphor-icons/react";
 import "./chat_input.scss";
 import { FileButton, useInputStore } from "./file_button";
-import { DraftMessage, Message } from "./types";
+import { type DraftMessage } from "./types";
 
 type props = {
   onSend: (
