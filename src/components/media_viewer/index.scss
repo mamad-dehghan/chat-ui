@@ -15,7 +15,7 @@
             flex-direction: row;
             flex-wrap: nowrap;
             overflow-x: auto;
-            overflow-y: hidden;
+            // overflow-y: hidden;
             scrollbar-width: none;
             scroll-snap-type: x mandatory;
 
@@ -26,22 +26,19 @@
                 user-select: none;
                 display: flex;
                 scroll-snap-align: center;
-
                 position: relative;
 
-                .attachment-caption {
-                    // @include elevation.elevation-1();
-                    // --secondary-background-color: hsla(var(--primary), 0.14);
-                    background-color: hsla(var(--background), 0.75);
+            }
+            .attachment-caption {
+                background-color: hsla(var(--background), 0.75);
 
-                    @include typography.bodyMedium();
+                @include typography.bodyMedium();
 
-                    position: absolute;
-                    bottom: 0;
-                    inset-inline: 0;
-                    width: 100%;
-                    padding: 0 8px 4px
-                }
+                position: absolute;
+                bottom: 0;
+                inset-inline: 0;
+                width: 100%;
+                padding: 0 8px 4px
             }
         }
     }

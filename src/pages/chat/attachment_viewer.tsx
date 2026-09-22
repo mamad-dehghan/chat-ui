@@ -1,5 +1,5 @@
 import { FileIcon } from "@phosphor-icons/react";
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { useMediaStore1 } from "../../components/media_viewer";
 import { SERVER_HOST } from "../../utils/socket";
 import "./attachment_viewer.scss";
@@ -7,13 +7,13 @@ import "./file_button.scss";
 
 type bulkProps = {
   attachment:
-  | {
-    id: string;
-    name: string;
-    type: string;
-    details: any;
-  }[]
-  | null;
+    | {
+        id: string;
+        name: string;
+        type: string;
+        details: any;
+      }[]
+    | null;
   chat_id: number;
   message_id: number;
 };
@@ -94,7 +94,7 @@ type props = {
 };
 
 const ImageAttachmentViewer = ({ attachment, chat_id, message_id }: props) => {
-  const openMediaViewer = useMediaStore1(state => state.open);
+  const openMediaViewer = useMediaStore1((state) => state.open);
 
   const url = useMemo(
     () =>
@@ -113,19 +113,20 @@ const ImageAttachmentViewer = ({ attachment, chat_id, message_id }: props) => {
         minHeight: 0,
       }}
       onClick={() => {
-        openMediaViewer({ ...attachment, message_id, type: "image" })
+        openMediaViewer({ ...attachment, message_id, type: "image" });
       }}
     >
       <img
         src={url}
         style={{
-          aspectRatio: attachment.details.height / attachment.details.width,
+          aspectRatio: attachment.details.width / attachment.details.height,
           display: "block",
           width: "100%",
           height: "100%",
           objectFit: "cover",
         }}
       />
+      1
     </div>
   );
 };
