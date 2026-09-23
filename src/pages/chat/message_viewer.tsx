@@ -1,17 +1,37 @@
-import { useChatStore, type Message } from "./types";
+import { type Message } from "./types";
 import "./message_viewer.scss";
 import { AttachmentViewer } from "./attachment_viewer";
+import { useSelectModeStore } from "./chat_selector";
+import classNames from "classnames";
+import { TickBadge } from "../group/check_tick";
 
 type props = {
   message: Message;
 };
 
 export const MessageViewer = ({ message }: props) => {
-  const userId = useChatStore((state) => state.user?.id);
+  const isSelectModeActive = useSelectModeStore((state) => state.active);
+  const toggleMessage = useSelectModeStore((state) => state.toggleMessage);
+  const selectedDetails = useSelectModeStore((state) => state.selected).get(
+    message.id,
+  );
+  const isSelected = selectedDetails
+    ? selectedDetails.length === (message.attachment?.length ?? 0)
+    : false;
+
   return (
     <div
-      className="message-wrapper"
+      className={classNames("message-wrapper", isSelected && "element-focused")}
+      // data-selected={isSelected}
       data-user-id={message.user_id}
+      onClick={() => {
+        if (isSelectModeActive) toggleMessage(message);
+      }}
+      onContextMenu={(event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        toggleMessage(message);
+      }}
       style={
         {
           // width: "cover",
@@ -23,9 +43,21 @@ export const MessageViewer = ({ message }: props) => {
         }
       }
     >
-      <div className="user-profile">
-        <div>M</div>
-      </div>
+      <TickBadge
+        show={isSelected}
+        style={{
+          // "--color": "var(--primary)",
+          right: "anchor(right)",
+          top: "anchor(bottom)",
+          // top: "unset",
+          margin: "-8px 8px",
+          border: "2px solid hsla(var(--background), 0.9)",
+        }}
+      >
+        <div className="user-profile">
+          <div>M</div>
+        </div>
+      </TickBadge>
       <div className="message-username">Mamad</div>
       <div className="message-time">
         {new Date(message.created_at).getHours().toString().padStart(2, "0") +

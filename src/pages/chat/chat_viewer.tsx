@@ -1,5 +1,7 @@
+import { useHistoryLock } from "kitty";
 import { useEffect, useLayoutEffect } from "react";
 import { MediaViewer, useMediaStore1 } from "../../components/media_viewer";
+import { useSelectModeStore } from "./chat_selector";
 import { MessageViewer } from "./message_viewer";
 import { type ChatStore } from "./types";
 
@@ -20,8 +22,15 @@ export const ChatViewer = ({ useChat }: props) => {
     }
   }, [isLoading]);
 
+  const cleanupSelectMode = useSelectModeStore((state) => state.cleanup);
+  const isSelectModeActive = useSelectModeStore((state) => state.active);
+  useHistoryLock(cleanupSelectMode, isSelectModeActive);
+
   useLayoutEffect(() => {
     useMediaStore1.getState().setChat(useChat);
+    return () => {
+      cleanupSelectMode();
+    };
   }, []);
 
   return (

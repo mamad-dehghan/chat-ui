@@ -1,56 +1,63 @@
 @use "kitty/scss/typography" as typography;
+@use "kitty/scss/palette" as palette;
+@use "kitty/scss/elevation" as elevation;
 
 .message-wrapper {
-    width: stretch;
-    /* margin-top: 1px; */
-    background-color: hsla(var(--natural-0), 0.1);
-    /* padding: 0.5rem 2rem; */
-    padding: 3px 6px;
-    display: grid;
-    grid-template-areas:
-        "profile username time"
-        "profile content content";
-    grid-template-columns: 3rem 1fr 3rem;
-    grid-template-rows: 1rem auto;
-    gap: 2px 4px;
+  width: stretch;
+  /* margin-top: 1px; */
+  @include elevation.elevation-0();
 
-    .user-profile {
-        grid-area: profile;
+  /* padding: 0.5rem 2rem; */
+  padding: 3px 6px;
+  display: grid;
+  grid-template-areas:
+    "profile username time"
+    "profile content content";
+  grid-template-columns: 3rem 1fr 3rem;
+  grid-template-rows: 1rem auto;
+  gap: 2px 4px;
 
-        div {
-            width: 2.5rem;
-            aspect-ratio: 1;
-            background-color: hsla(var(--secondary));
-            color: hsla(var(--on-secondary));
-            border-radius: 50%;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+  &.element-focused {
+    @include palette.state-layer(var(--surface-variant));
+  }
 
-        margin-bottom: auto;
+  .user-profile {
+    grid-area: profile;
+
+    div {
+      width: 2.5rem;
+      aspect-ratio: 1;
+      background-color: hsla(var(--secondary));
+      color: hsla(var(--on-secondary));
+      border-radius: 50%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .message-username {
-        @include typography.labelLarge();
-        grid-area: username;
-        color: hsl(var(--primary));
-        /* padding: 2px ; */
-    }
+    margin-bottom: auto;
+  }
 
-    .message-time {
-        @include typography.bodySmall();
-        text-align: end;
-        grid-area: time;
-        color: hsl(var(--surface-variant));
-    }
+  .message-username {
+    @include typography.labelLarge();
+    grid-area: username;
+    color: hsl(var(--primary));
+    /* padding: 2px ; */
+  }
 
-    .message-content {
-        @include typography.bodyMedium();
-        /* @include typography.ellipsisText(); */
-        grid-area: content;
-        color: hsl(var(--on-surface));
-        padding: 2px 2rem 2px 4px;
-    }
+  .message-time {
+    @include typography.bodySmall();
+    text-align: end;
+    grid-area: time;
+    color: hsl(var(--outline));
+  }
+
+  .message-content {
+    @include typography.bodyMedium();
+    /* @include typography.ellipsisText(); */
+    grid-area: content;
+    color: hsl(var(--on-surface));
+    padding: 2px 2rem 2px 4px;
+  }
 }

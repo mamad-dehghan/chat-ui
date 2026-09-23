@@ -12,54 +12,29 @@ import { Header } from "../../components/header";
 import { ChatInput } from "./chat_input";
 import { ChatViewer } from "./chat_viewer";
 import { type ChatStore } from "./types";
+import { SelectModeHeader, useSelectModeStore } from "./chat_selector";
 
 type props = {
   useChat: ChatStore;
 };
 
 export const ChatContent = ({ useChat }: props) => {
-  const [, setLocation] = useLocation();
   const loadMessages = useChat((state) => state.loadMessages);
   const sendMessage = useChat((state) => state.sendMessage);
-  const displayName = useChat((state) => state.displayName ?? state.name);
 
   useLayoutEffect(() => {
     loadMessages();
   }, []);
 
+  const isSelectModeActive = useSelectModeStore((state) => state.active);
+
   return (
     <>
-      <Header>
-        <Tooltip title="Back">
-          <IconButton
-            onClick={() => {
-              document.startViewTransition(() => {
-                setLocation("/");
-              });
-            }}
-            // className="new-chat-button"
-            Icon={CaretLeftIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-        <span>{displayName}</span>
-        <Tooltip title="Search">
-          <IconButton
-            // onClick={() => {
-            //   document.startViewTransition(() => {
-            //     setLocation("/");
-            //   })
-            // }}
-            // className="new-chat-button"
-            Icon={MagnifyingGlassIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-      </Header>
+      {isSelectModeActive ? (
+        <SelectModeHeader />
+      ) : (
+        <UnselectHeader useChat={useChat} />
+      )}
       <section
         style={{
           // width: "100%",
@@ -92,5 +67,37 @@ export const ChatContent = ({ useChat }: props) => {
         />
       </section>
     </>
+  );
+};
+
+const UnselectHeader = ({ useChat }: props) => {
+  const [, setLocation] = useLocation();
+  const displayName = useChat((state) => state.displayName ?? state.name);
+
+  return (
+    <Header>
+      <Tooltip title="Back">
+        <IconButton
+          onClick={() => {
+            document.startViewTransition(() => {
+              setLocation("/");
+            });
+          }}
+          Icon={CaretLeftIcon}
+          size={sizeOptions.medium}
+          fill={fillOptions.link}
+          mode={colorOptions.tertiary}
+        />
+      </Tooltip>
+      <span>{displayName}</span>
+      <Tooltip title="Search">
+        <IconButton
+          Icon={MagnifyingGlassIcon}
+          size={sizeOptions.medium}
+          fill={fillOptions.link}
+          mode={colorOptions.tertiary}
+        />
+      </Tooltip>
+    </Header>
   );
 };

@@ -1,9 +1,8 @@
 .check-tick-icon {
-    width: 12px;
-    height: 12px;
+  font-size: 12px;
 }
 .badge:has(.check-tick-icon) {
-    background-color: hsl(var(--color));
-    color: hsl(var(--on-color));
-    padding: 3px;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--on-primary));
+  padding: 3px;
 }
