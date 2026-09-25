@@ -1,9 +1,16 @@
-import { CaretLeftIcon, UserPlusIcon } from "@phosphor-icons/react";
+import { UserPlusIcon } from "@phosphor-icons/react";
+import {
+  colorOptions,
+  fillOptions,
+  IconButton,
+  sizeOptions,
+  Tooltip,
+} from "kitty";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { Header } from "../../components/header";
 import { useFetch } from "../../hooks/useFetch";
-import { IconButton, Tooltip } from "kitty";
-import { colorOptions, fillOptions, sizeOptions } from "kitty";
+import { useHeader } from "../../layout/header";
+import { HeaderBackButton } from "../../layout/header/commons";
 import { ListItem } from "../list/list-item";
 import { getContacts } from "./api";
 import "./index.scss";
@@ -11,39 +18,27 @@ import "./index.scss";
 export const ContactsPage = () => {
   const [, setLocation] = useLocation();
   const contacts = useFetch(getContacts);
+  const setup = useHeader((state) => state.setup);
 
-  console.log("contacts", contacts);
-  return (
-    <div className="contacts-page">
-      <Header>
-        <Tooltip title="Back">
-          <IconButton
-            onClick={() => {
-              document.startViewTransition(() => {
-                setLocation("/");
-              });
-            }}
-            // className="new-chat-button"
-            Icon={CaretLeftIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-        <span></span>
+  useEffect(() => {
+    setup({
+      left: <HeaderBackButton />,
+      center: null,
+      right: (
         <Tooltip title="Add Contact">
           <IconButton
-            // onClick={() => {
-            //   setLocation("/contacts");
-            // }}
-            // className="new-chat-button"
             Icon={UserPlusIcon}
             size={sizeOptions.medium}
             fill={fillOptions.link}
             mode={colorOptions.tertiary}
           />
         </Tooltip>
-      </Header>
+      ),
+    });
+  }, []);
+
+  return (
+    <>
       {contacts === undefined ? (
         <div>loading ... </div>
       ) : (
@@ -62,6 +57,6 @@ export const ContactsPage = () => {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };

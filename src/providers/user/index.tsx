@@ -16,7 +16,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useLayoutEffect(() => {
     socket.on("connect_error", (err) => {
       console.error("Connection failed:", err.message);
-      // if (location !== "/")
       setLocation("/");
     });
     socket.connect();
@@ -24,18 +23,5 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   if (!userInformation) return <LoginPage />;
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        alignItems: "stretch",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return children;
 };

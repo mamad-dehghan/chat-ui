@@ -7,36 +7,44 @@ import {
   Tooltip,
 } from "kitty";
 import { create } from "zustand";
-import { Header } from "../../components/header";
 import type { singleAttachment } from "../../components/media_viewer";
 import type { Message, SingleChatStore } from "./types";
+import { useEffect } from "react";
+import { useHeader } from "../../layout/header";
 
 export const SelectModeHeader = () => {
   const selecteCount = useSelectModeStore((state) => state.selected.size);
   const cleanup = useSelectModeStore((state) => state.cleanup);
+  const setup = useHeader((state) => state.setup);
 
-  return (
-    <Header>
-      <Tooltip title="Cancel Selection">
-        <IconButton
-          onClick={cleanup}
-          Icon={XIcon}
-          size={sizeOptions.medium}
-          fill={fillOptions.link}
-          mode={colorOptions.tertiary}
-        />
-      </Tooltip>
-      <span>{selecteCount} selected</span>
-      <Tooltip title="Actions">
-        <IconButton
-          Icon={DotsThreeVerticalIcon}
-          size={sizeOptions.medium}
-          fill={fillOptions.link}
-          mode={colorOptions.tertiary}
-        />
-      </Tooltip>
-    </Header>
-  );
+  useEffect(() => {
+    setup({
+      left: (
+        <Tooltip title="Cancel Selection">
+          <IconButton
+            onClick={cleanup}
+            Icon={XIcon}
+            size={sizeOptions.medium}
+            fill={fillOptions.link}
+            mode={colorOptions.tertiary}
+          />
+        </Tooltip>
+      ),
+      center: <span>{selecteCount} selected</span>,
+      right: (
+        <Tooltip title="Actions">
+          <IconButton
+            Icon={DotsThreeVerticalIcon}
+            size={sizeOptions.medium}
+            fill={fillOptions.link}
+            mode={colorOptions.tertiary}
+          />
+        </Tooltip>
+      ),
+    });
+  }, [selecteCount]);
+
+  return undefined;
 };
 
 type selectModeStoreType = {

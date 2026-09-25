@@ -1,18 +1,13 @@
-import { CaretLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { useEffect, useLayoutEffect } from "react";
+import { useHeader } from "../../layout/header";
 import {
-  colorOptions,
-  fillOptions,
-  IconButton,
-  sizeOptions,
-  Tooltip,
-} from "kitty";
-import { useLayoutEffect } from "react";
-import { useLocation } from "wouter";
-import { Header } from "../../components/header";
+  HeaderBackButton,
+  HeaderSearchButton,
+} from "../../layout/header/commons";
 import { ChatInput } from "./chat_input";
+import { SelectModeHeader, useSelectModeStore } from "./chat_selector";
 import { ChatViewer } from "./chat_viewer";
 import { type ChatStore } from "./types";
-import { SelectModeHeader, useSelectModeStore } from "./chat_selector";
 
 type props = {
   useChat: ChatStore;
@@ -71,33 +66,17 @@ export const ChatContent = ({ useChat }: props) => {
 };
 
 const UnselectHeader = ({ useChat }: props) => {
-  const [, setLocation] = useLocation();
   const displayName = useChat((state) => state.displayName ?? state.name);
 
-  return (
-    <Header>
-      <Tooltip title="Back">
-        <IconButton
-          onClick={() => {
-            document.startViewTransition(() => {
-              setLocation("/");
-            });
-          }}
-          Icon={CaretLeftIcon}
-          size={sizeOptions.medium}
-          fill={fillOptions.link}
-          mode={colorOptions.tertiary}
-        />
-      </Tooltip>
-      <span>{displayName}</span>
-      <Tooltip title="Search">
-        <IconButton
-          Icon={MagnifyingGlassIcon}
-          size={sizeOptions.medium}
-          fill={fillOptions.link}
-          mode={colorOptions.tertiary}
-        />
-      </Tooltip>
-    </Header>
-  );
+  const setup = useHeader((state) => state.setup);
+
+  useEffect(() => {
+    setup({
+      left: <HeaderBackButton />,
+      center: <span>{displayName}</span>,
+      right: <HeaderSearchButton />,
+    });
+  }, []);
+
+  return undefined;
 };

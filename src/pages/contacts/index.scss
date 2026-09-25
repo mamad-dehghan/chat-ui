@@ -1,19 +1,7 @@
-.contacts-page {
-    display: flex;
-    flex-direction: column;
-    /* grid-template-columns: 1fr;
-grid-template-rows: auto 1fr;
-grid-template-areas: app-header / chat-list; */
-    min-height: 100vh;
-    width: stretch;
-    align-items: stretch;
-    justify-content: flex-start;
-
-    .contacts-list {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-items: flex-start;
-        gap: 1px;
-    }
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-items: flex-start;
+  gap: 1px;
 }

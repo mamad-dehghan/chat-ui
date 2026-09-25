@@ -1,19 +1,26 @@
 import {
-  ListIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   UserIcon,
   UsersThreeIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import classNames from "classnames";
-import { useState } from "react";
+import {
+  AppLayer,
+  colorOptions,
+  fillOptions,
+  IconButton,
+  sizeOptions,
+  Tooltip,
+} from "kitty";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "wouter";
-import { Header } from "../../components/header";
-import { IconButton, Tooltip } from "kitty";
-import { AppLayer } from "kitty";
-import { colorOptions, fillOptions, sizeOptions } from "kitty";
+import { useHeader } from "../../layout/header";
+import {
+  HeaderBackButton,
+  HeaderSearchButton,
+} from "../../layout/header/commons";
 import { useChatStore } from "../chat/types";
 import "./index.scss";
 import { ListItem } from "./list-item";
@@ -22,50 +29,31 @@ export const ListPage = () => {
   const username = useChatStore((state) => state.user?.username);
   const chats = useChatStore((state) => state.chats);
   const [, setLocation] = useLocation();
+  const setup = useHeader((state) => state.setup);
+  useEffect(() => {
+    setup({
+      left: <HeaderBackButton onClick={() => {}} />,
+      center: <span>Loged in as: {username}</span>,
+      right: <HeaderSearchButton />,
+    });
+  }, [username]);
 
   return (
     <>
-      <main className="list-page">
-        <Header>
-          <Tooltip title="Back">
-            <IconButton
-              // onClick={() => {
-              // document.startViewTransition(() => {
-              //   setLocation("/");
-              // });
-              // }}
-              // className="new-chat-button"
-              Icon={ListIcon}
-              size={sizeOptions.medium}
-              fill={fillOptions.link}
-              mode={colorOptions.tertiary}
-            />
-          </Tooltip>
-          <span>Loged in as: {username}</span>
-          <Tooltip title="Search">
-            <IconButton
-              Icon={MagnifyingGlassIcon}
-              size={sizeOptions.medium}
-              fill={fillOptions.link}
-              mode={colorOptions.tertiary}
-            />
-          </Tooltip>
-        </Header>
-        <div className="chat-list">
-          {Array.from(chats.values()).map((chat) => (
-            <ListItem
-              key={chat.getState().id}
-              onClick={() => {
-                document.startViewTransition(() => {
-                  setLocation(`/chat/${chat.getState().id}`);
-                });
-              }}
-              avatar={undefined}
-              title={chat.getState().displayName ?? chat.getState().name}
-            />
-          ))}
-        </div>
-      </main>
+      <div className="chat-list">
+        {Array.from(chats.values()).map((chat) => (
+          <ListItem
+            key={chat.getState().id}
+            onClick={() => {
+              document.startViewTransition(() => {
+                setLocation(`/chat/${chat.getState().id}`);
+              });
+            }}
+            avatar={undefined}
+            title={chat.getState().displayName ?? chat.getState().name}
+          />
+        ))}
+      </div>
       <FloatSection />
     </>
   );

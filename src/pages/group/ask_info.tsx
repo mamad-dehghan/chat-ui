@@ -1,8 +1,15 @@
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
-import { Header } from "../../components/header";
-import { IconButton, Input, Tooltip } from "kitty";
-import { colorOptions, fillOptions, sizeOptions } from "kitty";
-import { useState } from "react";
+import { CaretRightIcon } from "@phosphor-icons/react";
+import {
+  colorOptions,
+  fillOptions,
+  IconButton,
+  Input,
+  sizeOptions,
+  Tooltip,
+} from "kitty";
+import { useEffect, useState } from "react";
+import { useHeader } from "../../layout/header";
+import { HeaderBackButton } from "../../layout/header/commons";
 
 type props = {
   handlePrevious: () => void;
@@ -11,23 +18,20 @@ type props = {
 
 export const AskInfo = ({ handlePrevious, handleNext }: props) => {
   const [name, setName] = useState<string>("");
-  return (
-    <>
-      <Header>
-        <Tooltip title="Back">
-          <IconButton
-            onClick={() => {
-              document.startViewTransition(() => {
-                handlePrevious();
-              });
-            }}
-            Icon={CaretLeftIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-        <span></span>
+  const setup = useHeader((state) => state.setup);
+  useEffect(() => {
+    setup({
+      left: (
+        <HeaderBackButton
+          onClick={() => {
+            document.startViewTransition(() => {
+              handlePrevious();
+            });
+          }}
+        />
+      ),
+      center: null,
+      right: (
         <Tooltip title="Next">
           <IconButton
             onClick={() => {
@@ -41,7 +45,12 @@ export const AskInfo = ({ handlePrevious, handleNext }: props) => {
             mode={colorOptions.tertiary}
           />
         </Tooltip>
-      </Header>
+      ),
+    });
+  }, []);
+
+  return (
+    <>
       <div>
         <Input
           id="group-name"

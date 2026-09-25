@@ -1,9 +1,20 @@
-import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
-import { type Dispatch, type SetStateAction, useCallback } from "react";
-import { useLocation } from "wouter";
-import { Header } from "../../components/header";
-import { FilterChip, IconButton, Tooltip } from "kitty";
-import { colorOptions, fillOptions, sizeOptions } from "kitty";
+import { CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import {
+  colorOptions,
+  fillOptions,
+  FilterChip,
+  IconButton,
+  sizeOptions,
+  Tooltip,
+} from "kitty";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useEffect,
+} from "react";
+import { useHeader } from "../../layout/header";
+import { HeaderBackButton } from "../../layout/header/commons";
 import { type User } from "../../providers/user";
 import { ListItem } from "../list/list-item";
 
@@ -20,35 +31,12 @@ export const SelectUserSection = ({
   setSelectedUsers,
   handleNext,
 }: props) => {
-  const [, setLocation] = useLocation();
+  const setup = useHeader((state) => state.setup);
 
-  const toggleSelect = useCallback(
-    (user: User) => () => {
-      setSelectedUsers((pre) =>
-        pre.some((u) => u.id === user.id)
-          ? [...pre.filter((u) => u.id !== user.id)]
-          : [user].concat(pre),
-      );
-    },
-    [],
-  );
-
-  return (
-    <div className="select-user-group-page">
-      <Header>
-        <Tooltip title="Back">
-          <IconButton
-            onClick={() => {
-              document.startViewTransition(() => {
-                setLocation("/");
-              });
-            }}
-            Icon={CaretLeftIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
+  useEffect(() => {
+    setup({
+      left: <HeaderBackButton />,
+      center: (
         <span
           style={{
             display: "flex",
@@ -70,6 +58,8 @@ export const SelectUserSection = ({
             </FilterChip>
           ))}
         </span>
+      ),
+      right: (
         <Tooltip title="Next">
           <IconButton
             onClick={() => {
@@ -83,7 +73,23 @@ export const SelectUserSection = ({
             mode={colorOptions.tertiary}
           />
         </Tooltip>
-      </Header>
+      ),
+    });
+  }, [selectedUsers]);
+
+  const toggleSelect = useCallback(
+    (user: User) => () => {
+      setSelectedUsers((pre) =>
+        pre.some((u) => u.id === user.id)
+          ? [...pre.filter((u) => u.id !== user.id)]
+          : [user].concat(pre),
+      );
+    },
+    [],
+  );
+
+  return (
+    <div className="select-user-group-page">
       {contacts === undefined ? (
         <div>loading ... </div>
       ) : (

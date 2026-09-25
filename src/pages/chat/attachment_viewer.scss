@@ -1,10 +1,12 @@
 @use "kitty/scss/elevation" as elevation;
 
 .viewer-with-1-child {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto;
 }
 .viewer-with-2-child {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
 }
 .viewer-with-3-child {
   display: grid;
