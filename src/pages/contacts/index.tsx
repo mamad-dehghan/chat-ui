@@ -3,21 +3,21 @@ import {
   colorOptions,
   fillOptions,
   IconButton,
+  LoadingIndicator,
   sizeOptions,
   Tooltip,
 } from "kitty";
-import { useEffect } from "react";
+import { Suspense, use, useEffect } from "react";
 import { useLocation } from "wouter";
-import { useFetch } from "../../hooks/useFetch";
 import { useHeader } from "../../layout/header";
 import { HeaderBackButton } from "../../layout/header/commons";
 import { ListItem } from "../list/list-item";
-import { getContacts } from "./api";
 import "./index.scss";
+import { useUsersState } from "../../modules/users/state";
+import type { User } from "../../providers/user";
+import { PageLoading } from "../../components/page_loading";
 
 export const ContactsPage = () => {
-  const [, setLocation] = useLocation();
-  const contacts = useFetch(getContacts);
   const setup = useHeader((state) => state.setup);
 
   useEffect(() => {
@@ -37,26 +37,37 @@ export const ContactsPage = () => {
     });
   }, []);
 
+  const contactsPromise = useUsersState((state) => state.getContacts)();
+
   return (
     <>
-      {contacts === undefined ? (
-        <div>loading ... </div>
-      ) : (
-        <div className="contacts-list">
-          {contacts.map((user) => (
-            <ListItem
-              key={user.username}
-              avatar={undefined}
-              title={user.username}
-              onClick={() => {
-                document.startViewTransition(() => {
-                  setLocation(`/user/${user.id}`);
-                });
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <Suspense fallback={<PageLoading />}>
+        <Contacts contactsPromise={contactsPromise} />
+      </Suspense>
     </>
+  );
+};
+
+type contactsViewerProps = { contactsPromise: Promise<User[]> };
+
+const Contacts = ({ contactsPromise }: contactsViewerProps) => {
+  const [, setLocation] = useLocation();
+  const contacts = use(contactsPromise);
+
+  return (
+    <div className="contacts-list">
+      {contacts.map((user) => (
+        <ListItem
+          key={user.username}
+          avatar={undefined}
+          title={user.username}
+          onClick={() => {
+            document.startViewTransition(() => {
+              setLocation(`/user/${user.id}`);
+            });
+          }}
+        />
+      ))}
+    </div>
   );
 };

@@ -7,7 +7,6 @@ export const Header = () => {
   const center = useHeader((state) => state.center);
   const right = useHeader((state) => state.right);
 
-  console.log(left, center, right);
   return (
     <div className="app-header">
       <div className="app-header--section left">{left}</div>

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from "react";
+import { use, useEffect, useLayoutEffect } from "react";
 import { useHeader } from "../../layout/header";
 import {
   HeaderBackButton,
@@ -7,7 +7,10 @@ import {
 import { ChatInput } from "./chat_input";
 import { SelectModeHeader, useSelectModeStore } from "./chat_selector";
 import { ChatViewer } from "./chat_viewer";
-import { type ChatStore } from "./types";
+import { useChatStore, type ChatStore } from "./types";
+import { useUsersState } from "../../modules/users/state";
+import { useFetch } from "../../hooks/useFetch";
+import type { User } from "../../providers/user";
 
 type props = {
   useChat: ChatStore;
@@ -66,17 +69,39 @@ export const ChatContent = ({ useChat }: props) => {
 };
 
 const UnselectHeader = ({ useChat }: props) => {
-  const displayName = useChat((state) => state.displayName ?? state.name);
-
   const setup = useHeader((state) => state.setup);
+  const chatName = useChat((state) => state.name);
+  const chatType = useChat((state) => state.type);
 
   useEffect(() => {
     setup({
       left: <HeaderBackButton />,
-      center: <span>{displayName}</span>,
+      center:
+        chatType !== "direct" ? (
+          <span>{chatName}</span>
+        ) : (
+          <span>
+            <ChatDisplayName useChat={useChat} />
+          </span>
+        ),
       right: <HeaderSearchButton />,
     });
-  }, []);
+  }, [chatType, chatName]);
 
   return undefined;
+};
+
+export const ChatDisplayName = ({ useChat }: props): string | undefined => {
+  const currentUserId = useChatStore((state) => state.user?.id)!;
+  const chatName = useChat((state) => state.name);
+  const targetUserId = chatName
+    .slice("direct-".length, chatName.length)
+    .split(",")
+    .map((id) => parseInt(id))
+    .filter((id) => id !== currentUserId)[0]!;
+  const getUserById = useUsersState((state) => state.getUserById);
+
+  const username = useFetch(() => getUserById(targetUserId));
+
+  return username?.username;
 };

@@ -2,6 +2,7 @@ import { create, type StoreApi, type UseBoundStore } from "zustand";
 import { type User } from "../../providers/user";
 import socket from "../../utils/socket";
 import { getChatMessages } from "./api";
+import { useUsersState } from "../../modules/users/state";
 
 export interface Chat {
   id: number;
@@ -95,6 +96,7 @@ type Tot = {
 export const useChatStore = create<Tot>((set, get) => ({
   user: undefined,
   initialize: (user) => {
+    useUsersState.getState().addUser(user);
     set({
       user,
       chats: [],
@@ -145,7 +147,7 @@ export const useChatStore = create<Tot>((set, get) => ({
   },
   addEmptyDirectChat: (userId: number) => {
     const newDraftChat = createEmptyChatStore(userId);
-    set(({ draftChats, user }) => ({
+    set(({ draftChats }) => ({
       draftChats: draftChats.concat(newDraftChat),
     }));
     return newDraftChat;
@@ -225,7 +227,7 @@ export function createSingleChatStore(chat: Chat, userInformation: User) {
 
 type emptyDirectChat = {
   name: string;
-  displayName: string;
+  type: "direct";
   targetUserId: number;
   messages: Message[] | undefined;
   // pendingMessages: Message[];
@@ -236,7 +238,7 @@ type emptyDirectChat = {
 export function createEmptyChatStore(targetUserId: number) {
   const sc = create<emptyDirectChat>((set, get) => ({
     name: "not found",
-    displayName: "not found",
+    type: "direct",
     targetUserId,
     messages: [],
     pendingMessages: [],

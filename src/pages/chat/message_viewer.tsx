@@ -4,6 +4,9 @@ import { AttachmentViewer } from "./attachment_viewer";
 import { useSelectModeStore } from "./chat_selector";
 import classNames from "classnames";
 import { TickBadge } from "../group/check_tick";
+import { useFetch } from "../../hooks/useFetch";
+import { useUsersState } from "../../modules/users/state";
+import { use } from "react";
 
 type props = {
   message: Message;
@@ -18,6 +21,9 @@ export const MessageViewer = ({ message }: props) => {
   const isSelected = selectedDetails
     ? selectedDetails.length === (message.attachment?.length ?? 0)
     : false;
+
+  const getUserById = useUsersState((state) => state.getUserById);
+  const senderUsername = useFetch(() => getUserById(message.user_id));
 
   return (
     <div
@@ -55,10 +61,10 @@ export const MessageViewer = ({ message }: props) => {
         }}
       >
         <div className="user-profile">
-          <div>M</div>
+          <div>{senderUsername?.username.charAt(0)}</div>
         </div>
       </TickBadge>
-      <div className="message-username">Mamad</div>
+      <div className="message-username">{senderUsername?.username}</div>
       <div className="message-time">
         {new Date(message.created_at).getHours().toString().padStart(2, "0") +
           ":" +

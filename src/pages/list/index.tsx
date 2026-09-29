@@ -17,22 +17,19 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "wouter";
 import { useHeader } from "../../layout/header";
-import {
-  HeaderBackButton,
-  HeaderSearchButton,
-} from "../../layout/header/commons";
-import { useChatStore } from "../chat/types";
+import { HeaderSearchButton } from "../../layout/header/commons";
+import { ChatDisplayName } from "../chat/chat_content";
+import { useChatStore, type SingleChatStore } from "../chat/types";
 import "./index.scss";
 import { ListItem } from "./list-item";
 
 export const ListPage = () => {
   const username = useChatStore((state) => state.user?.username);
   const chats = useChatStore((state) => state.chats);
-  const [, setLocation] = useLocation();
   const setup = useHeader((state) => state.setup);
   useEffect(() => {
     setup({
-      left: <HeaderBackButton onClick={() => {}} />,
+      left: null,
       center: <span>Loged in as: {username}</span>,
       right: <HeaderSearchButton />,
     });
@@ -42,20 +39,32 @@ export const ListPage = () => {
     <>
       <div className="chat-list">
         {Array.from(chats.values()).map((chat) => (
-          <ListItem
-            key={chat.getState().id}
-            onClick={() => {
-              document.startViewTransition(() => {
-                setLocation(`/chat/${chat.getState().id}`);
-              });
-            }}
-            avatar={undefined}
-            title={chat.getState().displayName ?? chat.getState().name}
-          />
+          <ChatListItem key={chat.getState().id} useChat={chat} />
         ))}
       </div>
       <FloatSection />
     </>
+  );
+};
+
+type props = {
+  useChat: SingleChatStore;
+};
+
+const ChatListItem = ({ useChat }: props) => {
+  const [, setLocation] = useLocation();
+  const chatId = useChat((state) => state.id);
+  const chatName = ChatDisplayName({ useChat }) ?? "";
+  return (
+    <ListItem
+      onClick={() => {
+        document.startViewTransition(() => {
+          setLocation(`/chat/${chatId}`);
+        });
+      }}
+      avatar={undefined}
+      title={chatName}
+    />
   );
 };
 
