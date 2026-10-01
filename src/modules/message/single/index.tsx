@@ -1,12 +1,11 @@
-import { type Message } from "./types";
-import "./message_viewer.scss";
-import { AttachmentViewer } from "./attachment_viewer";
-import { useSelectModeStore } from "./chat_selector";
 import classNames from "classnames";
-import { TickBadge } from "../group/check_tick";
-import { useFetch } from "../../hooks/useFetch";
-import { useUsersState } from "../../modules/users/state";
-import { use } from "react";
+import { useFetch } from "../../../hooks/useFetch";
+import { TickBadge } from "../../../pages/group/check_tick";
+import { AttachmentViewer } from "../../attachment/view";
+import { useSelectModeStore } from "../../chat/select/state";
+import { useUsersState } from "../../users/state";
+import "./index.scss";
+import type { Message } from "./type";
 
 type props = {
   message: Message;

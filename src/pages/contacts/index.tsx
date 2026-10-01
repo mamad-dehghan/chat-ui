@@ -14,8 +14,8 @@ import { HeaderBackButton } from "../../layout/header/commons";
 import { ListItem } from "../list/list-item";
 import "./index.scss";
 import { useUsersState } from "../../modules/users/state";
-import type { User } from "../../providers/user";
 import { PageLoading } from "../../components/page_loading";
+import type { User } from "../../modules/users/type";
 
 export const ContactsPage = () => {
   const setup = useHeader((state) => state.setup);

@@ -1,66 +1,7 @@
-import {
-  type DetailedHTMLProps,
-  type ImgHTMLAttributes,
-  useEffect,
-  useRef,
-} from "react";
 import { create } from "zustand";
-import "./zoomable.scss";
+import type { Position, zoomableStore } from "./type";
 
-type props = Omit<
-  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,
-  | "draggable"
-  | "onPointerDown"
-  | "onPointerMove"
-  | "onPointerUp"
-  | "onPointerCancel"
->;
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-const SCALE_THRESHOLD = 5;
-
-const distance = (a: Position, b: Position) => Math.hypot(a.x - b.x, a.y - b.y);
-
-const center = (a: Position, b: Position): Position => ({
-  x: (a.x + b.x) / 2,
-  y: (a.y + b.y) / 2,
-});
-
-// const overScrollCalculator = (imageRef: HTMLDivElement | null) => {
-//   if (!imageRef) return false;
-//   // console.log("trigger")
-//   const left = Math.floor(imageRef.scrollLeft);
-//   const right = imageRef.scrollWidth - (left + imageRef.clientWidth)
-//   if (left === 0 || right === 0) return false;
-//   else return true
-// }
-
-const clamp = (min: number, value: number, max: number) => {
-  return Math.min(max, Math.max(min, value));
-};
-
-type zoomableStore = {
-  zoom: HTMLElement | null;
-  img: HTMLElement | null;
-  setRef: (ref: zoomableStore["zoom"]) => void;
-  pointers: Map<number, Position>;
-  scale: number;
-  translateX: number;
-  translateY: number;
-  thresholdX: number;
-  thresholdY: number;
-  fixPosition: () => void;
-  onTouchMove: (event: React.TouchEvent) => void;
-  onDoubleClick: () => void;
-  onTouchStart: (event: React.TouchEvent) => void;
-  onTouchEnd: (event: React.TouchEvent) => void;
-};
-
-const useZoomable = create<zoomableStore>((set, get) => ({
+export const useZoomable = create<zoomableStore>((set, get) => ({
   zoom: null,
   img: null,
   setRef: (zoom) => {
@@ -212,67 +153,15 @@ const useZoomable = create<zoomableStore>((set, get) => ({
   },
 }));
 
-export const Zoomable = ({ ...props }: props) => {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const translateX = useZoomable((state) => state.translateX);
-  const translateY = useZoomable((state) => state.translateY);
-  const onTouchEnd = useZoomable((state) => state.onTouchEnd);
-  const onTouchStart = useZoomable((state) => state.onTouchStart);
-  const onTouchMove = useZoomable((state) => state.onTouchMove);
-  const onDoubleClick = useZoomable((state) => state.onDoubleClick);
-  const scale = useZoomable((state) => state.scale);
-  const setRef = useZoomable((state) => state.setRef);
+const SCALE_THRESHOLD = 5;
 
-  useEffect(() => {
-    setRef(wrapperRef.current);
-  }, [wrapperRef]);
+const distance = (a: Position, b: Position) => Math.hypot(a.x - b.x, a.y - b.y);
 
-  // useEffect(() => {
-  //   return () => {
-  //     useZoomable.setState({
-  //       zoom: null,
-  //       img: null,
-  //       pointers: new Map(),
-  //       scale: 1,
-  //       translateX: 0,
-  //       translateY: 0,
-  //       thresholdX: 0,
-  //       thresholdY: 0,
-  //     })
-  //   }
-  // })
+const center = (a: Position, b: Position): Position => ({
+  x: (a.x + b.x) / 2,
+  y: (a.y + b.y) / 2,
+});
 
-  return (
-    <div
-      className="zoomable"
-      style={{
-        overscrollBehavior: scale !== 1 ? "contain" : "auto",
-      }}
-      ref={wrapperRef}
-    >
-      <img
-        {...props}
-        draggable={false}
-        onTouchStart={onTouchStart}
-        onDoubleClick={onDoubleClick}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onContextMenu={(e) => e.preventDefault()}
-        style={{
-          display: "block",
-          maxWidth: "100%",
-          maxHeight: "100%",
-          objectFit: "contain",
-          userSelect: "none",
-          margin: "auto",
-          transition: `transform 80ms`,
-          ...props.style,
-          transform: `
-            ${props.style?.transform || ""}
-            matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})
-          `,
-        }}
-      />
-    </div>
-  );
+const clamp = (min: number, value: number, max: number) => {
+  return Math.min(max, Math.max(min, value));
 };

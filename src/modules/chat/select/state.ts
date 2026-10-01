@@ -1,66 +1,6 @@
-import { DotsThreeVerticalIcon, XIcon } from "@phosphor-icons/react";
-import {
-  colorOptions,
-  fillOptions,
-  IconButton,
-  sizeOptions,
-  Tooltip,
-} from "kitty";
 import { create } from "zustand";
-import type { singleAttachment } from "../../components/media_viewer";
-import type { Message, SingleChatStore } from "./types";
-import { useEffect } from "react";
-import { useHeader } from "../../layout/header";
-
-export const SelectModeHeader = () => {
-  const selecteCount = useSelectModeStore((state) => state.selected.size);
-  const cleanup = useSelectModeStore((state) => state.cleanup);
-  const setup = useHeader((state) => state.setup);
-
-  useEffect(() => {
-    setup({
-      left: (
-        <Tooltip title="Cancel Selection">
-          <IconButton
-            onClick={cleanup}
-            Icon={XIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-      ),
-      center: <span>{selecteCount} selected</span>,
-      right: (
-        <Tooltip title="Actions">
-          <IconButton
-            Icon={DotsThreeVerticalIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-      ),
-    });
-  }, [selecteCount]);
-
-  return undefined;
-};
-
-type selectModeStoreType = {
-  active: boolean;
-  isActive: () => boolean;
-  chatStore: SingleChatStore | null;
-  setup: (chatStore: SingleChatStore) => void;
-  selected: Map<number, string[]>;
-  toggleMessage: (message: Message) => void;
-  toggleAttachment: (
-    attachment: singleAttachment,
-    attachmentCount: number,
-  ) => void;
-  cleanup: () => void;
-  getSelectedMessages: () => Message[];
-};
+import type { Message } from "../../message/single/type";
+import type { selectModeStoreType } from "./type";
 
 export const useSelectModeStore = create<selectModeStoreType>((set, get) => ({
   active: false,
@@ -95,7 +35,7 @@ export const useSelectModeStore = create<selectModeStoreType>((set, get) => ({
       });
     }
   },
-  toggleAttachment: (attachment, attachmentCount) => {
+  toggleAttachment: (attachment) => {
     const currentSelected = get().selected;
     const findItem = currentSelected.get(attachment.message_id);
 

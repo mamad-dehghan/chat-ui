@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useFetch } from "../../hooks/useFetch";
-import { type User } from "../../providers/user";
 import socket from "../../utils/socket";
 import { getContacts } from "../contacts/api";
 import { AskInfo } from "./ask_info";
 import { SelectUserSection } from "./select_user";
+import type { User } from "../../modules/users/type";
 
 export const SelectGroupUserPage = () => {
   const [, setLocation] = useLocation();

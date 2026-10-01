@@ -18,8 +18,9 @@ import { createPortal } from "react-dom";
 import { useLocation } from "wouter";
 import { useHeader } from "../../layout/header";
 import { HeaderSearchButton } from "../../layout/header/commons";
-import { ChatDisplayName } from "../chat/chat_content";
-import { useChatStore, type SingleChatStore } from "../chat/types";
+import { ChatDisplayName } from "../../modules/chat/list/displayName";
+import { useChatStore } from "../../modules/chat/list/state";
+import type { SingleChatStore } from "../../modules/chat/single/type";
 import "./index.scss";
 import { ListItem } from "./list-item";
 

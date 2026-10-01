@@ -11,7 +11,8 @@ import { Drawer, fillOptions, IconButton, NavBar, sizeOptions } from "kitty";
 import { type ReactNode, useEffect } from "react";
 import { create } from "zustand";
 import "./file_button.scss";
-import { type DraftMessage, type messageAttachment } from "./types";
+import type { messageAttachment } from "../../modules/attachment/type";
+import type { DraftMessage } from "../../modules/message/single/type";
 
 export const FileButton = () => {
   const toggle = useInputStore((state) => state.toggle);

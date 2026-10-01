@@ -1,13 +1,8 @@
-import { useLayoutEffect, type ReactNode } from "react";
+import { type ReactNode, useLayoutEffect } from "react";
 import { useLocation } from "wouter";
-import { useChatStore } from "../../pages/chat/types";
 import { LoginPage } from "../../pages/login";
 import socket from "../../utils/socket";
-
-export interface User {
-  id: number;
-  username: string;
-}
+import { useChatStore } from "../chat/list/state";
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const userInformation = useChatStore((state) => state.user);

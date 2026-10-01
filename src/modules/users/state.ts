@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { User } from "../../providers/user";
 import { getContacts } from "../../pages/contacts/api";
+import type { User } from "./type";
 
 type usersStateType = {
   users: Map<number, User>;
@@ -12,7 +12,6 @@ type usersStateType = {
 export const useUsersState = create<usersStateType>((set, get) => ({
   users: new Map(),
   getUserById: async (id) => {
-    console.log("get: " + id);
     const cachedUsers = get().users;
     const cached = cachedUsers.get(id);
     if (cached) return cached;

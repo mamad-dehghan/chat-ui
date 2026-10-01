@@ -1,0 +1,44 @@
+@use "kitty/scss/elevation" as elevation;
+@use "kitty/scss/typography" as typography;
+
+.fullscreen-media-viewer-layer {
+  @include elevation.elevation-0();
+
+  .fullscreen-media-viewer {
+    width: 100vw;
+    height: 100vh;
+
+    .fullscreen-media-viewer--wrapper {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      // overflow-y: hidden;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+
+      .attachment-wrapper {
+        flex: 0 0 100vw;
+        width: 100%;
+        height: 100vh;
+        user-select: none;
+        display: flex;
+        scroll-snap-align: center;
+        position: relative;
+      }
+      .attachment-caption {
+        background-color: hsla(var(--background), 0.75);
+
+        @include typography.bodyMedium();
+
+        position: absolute;
+        bottom: 0;
+        inset-inline: 0;
+        width: 100%;
+        padding: 0 8px 4px;
+      }
+    }
+  }
+}

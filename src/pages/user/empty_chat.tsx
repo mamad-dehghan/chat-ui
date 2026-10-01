@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { ChatContent } from "../chat/chat_content";
-import { useChatStore } from "../chat/types";
+import { useChatStore } from "../../modules/chat/list/state";
+import { ChatViewer } from "../../modules/chat/list/view";
 
 type props = {
   id: number;
@@ -12,7 +12,7 @@ export const EmptyChat = ({ id }: props) => {
   const useChat = useMemo(() => getDraftChat(+id), [getDraftChat, id]);
   // const sendMessage = useChat((state) => state.sendMessage);
 
-  return <ChatContent useChat={useChat} />;
+  return <ChatViewer useChat={useChat} />;
   // return (
   //   <section
   //     style={{

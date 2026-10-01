@@ -1,5 +1,6 @@
+import type { Chat } from "../../modules/chat/list/type";
+import type { Message } from "../../modules/message/single/type";
 import { SERVER_HOST } from "../../utils/socket";
-import type { Chat, Message } from "./types";
 
 export const getChatMessages = async (
   chat: Pick<Chat, "id">,

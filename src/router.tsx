@@ -1,12 +1,12 @@
 import { useHistoryLockAbility } from "kitty";
 import { Route, Router, Switch } from "wouter";
 import { ScrollableLayout } from "./layout/scrollable";
-import { ChatPage } from "./pages/chat";
 import { ContactsPage } from "./pages/contacts";
 import { SelectGroupUserPage } from "./pages/group/create";
 import { ListPage } from "./pages/list";
 import { UserPage } from "./pages/user";
-import { UserProvider } from "./providers/user";
+import { ChatPage } from "./modules/chat/list/page";
+import { UserProvider } from "./modules/users/provider";
 
 export const AppRouter = () => {
   useHistoryLockAbility();

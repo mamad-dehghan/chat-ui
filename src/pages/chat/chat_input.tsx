@@ -3,7 +3,7 @@ import { colorOptions, fillOptions, sizeOptions } from "kitty";
 import { ArrowUpIcon } from "@phosphor-icons/react";
 import "./chat_input.scss";
 import { FileButton, useInputStore } from "./file_button";
-import { type DraftMessage } from "./types";
+import type { DraftMessage } from "../../modules/message/single/type";
 
 type props = {
   onSend: (
@@ -13,12 +13,11 @@ type props = {
 };
 
 export const ChatInput = ({ onSend }: props) => {
-  const fileType = useInputStore((state) => state.type);
   const viewer = useInputStore((state) => state.viewer);
   const fileContent = useInputStore((state) => state.content);
   const getAttachment = useInputStore((state) => state.getAsAttachment);
   const reset = useInputStore((state) => state.reset);
-  console.log(fileType);
+
   return (
     <div
       style={{

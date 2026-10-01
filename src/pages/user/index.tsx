@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { type RouteComponentProps, type StringRouteParams } from "wouter";
-import { ChatContent } from "../chat/chat_content";
-import { useChatStore } from "../chat/types";
 import { EmptyChat } from "./empty_chat";
+import { useChatStore } from "../../modules/chat/list/state";
+import { ChatViewer } from "../../modules/chat/list/view";
 
 type props = RouteComponentProps<StringRouteParams<"/user/:id">>;
 
@@ -17,5 +17,5 @@ export const UserPage = ({ params: { id } }: props) => {
   );
 
   if (!chatStore) return <EmptyChat id={+id} />;
-  return <ChatContent useChat={chatStore} />;
+  return <ChatViewer useChat={chatStore} />;
 };

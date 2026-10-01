@@ -1,0 +1,10 @@
+.zoomable {
+  flex: 0 0 100vw;
+  width: 100%;
+  height: 100vh;
+  user-select: none;
+  display: flex;
+  // scroll-snap-align: center;
+  overflow: hidden;
+  // overscroll-behavior: contain;
+}

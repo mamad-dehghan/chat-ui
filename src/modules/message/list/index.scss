@@ -1,0 +1,16 @@
+.chat-list {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: stretch;
+  align-self: stretch;
+  grid-area: chat-content;
+  display: flex;
+  flex-direction: column;
+  .message-list--inner {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-end;
+    overflow-anchor: auto;
+  }
+}

@@ -15,8 +15,8 @@ import {
 } from "react";
 import { useHeader } from "../../layout/header";
 import { HeaderBackButton } from "../../layout/header/commons";
-import { type User } from "../../providers/user";
 import { ListItem } from "../list/list-item";
+import type { User } from "../../modules/users/type";
 
 type props = {
   contacts: User[] | undefined;
