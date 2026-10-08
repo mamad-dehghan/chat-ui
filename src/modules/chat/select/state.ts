@@ -12,6 +12,43 @@ export const useSelectModeStore = create<selectModeStoreType>((set, get) => ({
       chatStore: chatStore,
       selected: new Map(),
     });
+    chatStore.subscribe((state, prevState) => {
+      if (state.messages == prevState.messages) return;
+
+      let shouldUpdate = false;
+      const newSelecteMap = new Map(get().selected);
+      for (const [id, selectedMessage] of newSelecteMap.entries()) {
+        const findMessage = state.messages?.find(
+          (message) => message.id === id,
+        );
+        if (!findMessage) {
+          shouldUpdate = true;
+          newSelecteMap.delete(id);
+          continue;
+        }
+        const newAttachments = selectedMessage.filter((smID) =>
+          findMessage?.attachment?.some((at) => at.id === smID),
+        );
+        console.log({ findMessage, newAttachments, selectedMessage, id });
+        if (newAttachments.length === selectedMessage.length) continue;
+        shouldUpdate = true;
+        if (newAttachments.length === 0 && findMessage.attachment?.length)
+          newSelecteMap.delete(id);
+        else newSelecteMap.set(id, newAttachments);
+        // if (newAttachments.length !== 0) newSelecteMap.set(id, newAttachments);
+        // if (newAttachments.length === 0 && findMessage.attachment === null)
+        // if (newAttachments.length === (findMessage.attachment?.length ?? 0))
+        // shouldUpdate = true;
+        // newSelecteMap.set(id, newAttachments);
+      }
+      console.log("new:", newSelecteMap);
+      if (shouldUpdate) {
+        set({
+          selected: newSelecteMap,
+          active: newSelecteMap.size > 0,
+        });
+      }
+    });
   },
   selected: new Map(),
   toggleMessage: (message) => {
@@ -75,30 +112,37 @@ export const useSelectModeStore = create<selectModeStoreType>((set, get) => ({
       selected: new Map(),
     });
   },
+  unselectAll: () => {
+    set({
+      active: false,
+      selected: new Map(),
+    });
+  },
   getSelectedMessages: () => {
     const chatStore = get().chatStore;
     if (!chatStore) {
       console.error("Chat not selected");
-      return [];
+      return { full: [], partial: [] };
     }
     const chatMessages = chatStore.getState().messages;
     if (!chatMessages) {
       console.error("Message not fetched");
-      return [];
+      return { full: [], partial: [] };
     }
-    const selected: Message[] = [];
+    const fullySelectedMessages: Message[] = [];
+    const partiallySelectedMessages: Message[] = [];
+
     for (const [id, attachments] of get().selected) {
       const targetMessage = chatMessages.find((m) => m.id === id);
       if (!targetMessage) continue;
       if (
         !targetMessage.attachment?.length ||
-        !attachments.length ||
-        attachments.length === targetMessage.attachment?.length
+        attachments.length === targetMessage.attachment.length
       ) {
-        selected.push(targetMessage);
+        fullySelectedMessages.push(targetMessage);
         continue;
       }
-      selected.push({
+      partiallySelectedMessages.push({
         ...targetMessage,
         attachment: targetMessage.attachment.filter((at) =>
           attachments.includes(at.id),
@@ -106,6 +150,6 @@ export const useSelectModeStore = create<selectModeStoreType>((set, get) => ({
       });
     }
 
-    return selected;
+    return { full: fullySelectedMessages, partial: partiallySelectedMessages };
   },
 }));

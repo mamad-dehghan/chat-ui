@@ -3,7 +3,7 @@ import { getChatMessages } from "../../../pages/chat/api";
 import socket from "../../../utils/socket";
 import type { DraftMessage, Message } from "../../message/single/type";
 import type { Chat } from "../list/type";
-import type { single } from "./type";
+import type { DeleteAttachmentsAck, DeleteMessageAck, single } from "./type";
 
 export function createSingleChatStore(chat: Chat) {
   const sc = create<single>((set, get) => ({
@@ -57,6 +57,40 @@ export function createSingleChatStore(chat: Chat) {
         // }));
       }
     },
+    async deleteMessage(id: number) {
+      const ack: DeleteMessageAck = await socket
+        .emitWithAck("delete-message", { id, chat_id: get().id })
+        .catch((error) => ({ status: false, error }));
+      if (!ack.status) {
+        console.log("Fail to delete message: ", id, ack);
+        // TODO: add toast message
+        return false;
+      }
+      set((state) => ({
+        messages: state.messages?.filter((msg) => msg.id !== id),
+      }));
+      return true;
+    },
+    async deleteAttachments(
+      message_id: number,
+      attachment_ids: (string | number)[],
+    ) {
+      const ack: DeleteAttachmentsAck = await socket.emitWithAck(
+        "delete-attachments",
+        { chat_id: get().id, message_id, attachment_ids },
+      );
+      if (!ack.status) {
+        console.log("Fail to delete attachments: ", message_id, ack);
+        // TODO: add toast message
+        return false;
+      }
+      set((state) => ({
+        messages: state.messages?.map((msg) =>
+          msg.id === message_id ? ack.message : msg,
+        ),
+      }));
+      return true;
+    },
   }));
   socket.on("new_message", (message: Message) => {
     if (message.chat_id === sc.getState().id) {
@@ -65,5 +99,24 @@ export function createSingleChatStore(chat: Chat) {
       }));
     }
   });
+
+  socket.on("delete_message", (message: Pick<Message, "chat_id" | "id">) => {
+    if (message.chat_id === sc.getState().id) {
+      sc.setState((state) => ({
+        messages: state.messages?.filter((msg) => msg.id !== message.id),
+      }));
+    }
+  });
+
+  socket.on("update_message", (updatedMessage: Message) => {
+    if (updatedMessage.chat_id === sc.getState().id) {
+      sc.setState((state) => ({
+        messages: state.messages?.map((msg) =>
+          msg.id === updatedMessage.id ? updatedMessage : msg,
+        ),
+      }));
+    }
+  });
+
   return sc;
 }

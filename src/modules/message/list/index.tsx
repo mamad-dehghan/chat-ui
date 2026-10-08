@@ -32,6 +32,7 @@ export const MessageList = ({ useChat }: props) => {
 
   useLayoutEffect(() => {
     useMediaStore.getState().setChat(useChat);
+    useSelectModeStore.getState().setup(useChat);
     return () => {
       cleanupSelectMode();
     };

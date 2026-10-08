@@ -1,4 +1,4 @@
-import { DotsThreeVerticalIcon, XIcon } from "@phosphor-icons/react";
+import { TrashIcon, XIcon } from "@phosphor-icons/react";
 import {
   colorOptions,
   fillOptions,
@@ -12,7 +12,7 @@ import { useSelectModeStore } from "./state";
 
 export const SelectModeHeader = () => {
   const selecteCount = useSelectModeStore((state) => state.selected.size);
-  const cleanup = useSelectModeStore((state) => state.cleanup);
+  const unselectAll = useSelectModeStore((state) => state.unselectAll);
   const setup = useHeader((state) => state.setup);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const SelectModeHeader = () => {
       left: (
         <Tooltip title="Cancel Selection">
           <IconButton
-            onClick={cleanup}
+            onClick={unselectAll}
             Icon={XIcon}
             size={sizeOptions.medium}
             fill={fillOptions.link}
@@ -29,18 +29,48 @@ export const SelectModeHeader = () => {
         </Tooltip>
       ),
       center: <span>{selecteCount} selected</span>,
-      right: (
-        <Tooltip title="Actions">
-          <IconButton
-            Icon={DotsThreeVerticalIcon}
-            size={sizeOptions.medium}
-            fill={fillOptions.link}
-            mode={colorOptions.tertiary}
-          />
-        </Tooltip>
-      ),
+      right: <DeleteSelectedButton />,
     });
   }, [selecteCount]);
 
   return undefined;
+};
+
+const DeleteSelectedButton = () => {
+  return (
+    <Tooltip title="Delete">
+      <IconButton
+        onClick={handleDelete}
+        Icon={TrashIcon}
+        size={sizeOptions.medium}
+        fill={fillOptions.link}
+        mode={colorOptions.tertiary}
+      />
+    </Tooltip>
+  );
+};
+
+const handleDelete = async () => {
+  const store = useSelectModeStore.getState();
+  const chatStore = store.chatStore;
+  if (!chatStore) {
+    console.error("Chat not selected");
+    return;
+  }
+  const state = chatStore.getState();
+  // Empty/draft chats have no deletable server messages.
+  if (!("deleteMessage" in state) || !("deleteAttachments" in state)) return;
+
+  const { full, partial } = store.getSelectedMessages();
+
+  for (const message of full) {
+    await state.deleteMessage(message.id);
+  }
+
+  for (const message of partial) {
+    await state.deleteAttachments(
+      message.id,
+      message.attachment?.map((at) => at.id) ?? [],
+    );
+  }
 };
